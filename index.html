@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Scientific Notation — Ganita Prakash Grade 8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -14,191 +14,669 @@
   --blue:#2c5f9e;--red:#c0392b;--green:#1a7a4a;--orange:#e08020;
   --font:'DM Sans',-apple-system,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5}
-.page{max-width:860px;margin:0 auto;padding:28px 20px}
-.lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
-.title{font-size:22px;font-weight:700;margin-bottom:5px}
-.subtitle{font-size:14px;color:var(--text2);margin-bottom:22px;max-width:560px;line-height:1.5}
+body{font-family:var(--font);background:var(--bg);color:var(--text);
+  min-height:100vh;-webkit-font-smoothing:antialiased;padding:24px 16px 60px;line-height:1.5}
+.app{max-width:940px;margin:0 auto}
+
+.head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.head-ic{width:42px;height:42px;border-radius:10px;background:var(--surface2);
+  border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:600;color:var(--text2);font-size:16px;flex-shrink:0}
+.lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:2px}
+.title{font-size:22px;font-weight:700;line-height:1.2}
 .card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
-.card-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:14px}
 
 /* Tabs */
-.tabs{display:flex;gap:4px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:4px;margin-bottom:20px}
-.tab{flex:1;padding:7px 0;text-align:center;font-size:13px;font-weight:500;color:var(--text2);border-radius:7px;cursor:pointer;border:none;background:none;font-family:var(--font);transition:all .12s}
-.tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.08);border:1.5px solid var(--border)}
+.tabs{display:flex;gap:4px;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:10px;padding:4px;margin-bottom:20px}
+.tab{flex:1;padding:9px 8px;border:none;background:transparent;border-radius:7px;
+  font-family:var(--font);font-size:13px;font-weight:600;color:var(--text2);
+  cursor:pointer;transition:all .15s;text-align:center}
+.tab.active{background:var(--surface);color:var(--text);
+  box-shadow:0 1px 3px rgba(0,0,0,.08);border:1.5px solid var(--border)}
 
-/* ── CONVERTER ── */
-.conv-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
-@media(max-width:560px){.conv-layout{grid-template-columns:1fr}}
-.conv-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:16px}
-.conv-card .cc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px}
-.conv-card input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:16px;font-weight:700;background:var(--surface);color:var(--text);outline:none;text-align:center}
-.conv-card input:focus{border-color:var(--blue)}
-.conv-result{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--blue);margin-top:8px;text-align:center;line-height:1.3}
+.view{display:none}
+.view.active{display:block}
 
-/* Steps display */
-.steps-strip{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px}
-.step-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:13.5px}
-.step-row:last-child{border-bottom:none}
-.step-num{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text3);min-width:20px}
-.step-text{color:var(--text2);flex:1}
-.step-val{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--blue)}
+/* ══ TAB 1: DECIMAL DRAGGER ════════════════════════════ */
+.dragger-intro{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.dragger-intro strong{color:var(--text)}
 
 /* Preset numbers */
-.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
-.preset-lbl{font-size:12px;color:var(--text3);font-weight:500}
-.psc{padding:4px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--mono);font-size:12px;background:var(--surface);color:var(--text2);cursor:pointer}
+.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.preset-lbl{font-size:12px;color:var(--text3);font-weight:600;white-space:nowrap}
+.psc{padding:5px 12px;border:1.5px solid var(--border);border-radius:7px;
+  font-family:var(--mono);font-size:12px;color:var(--text2);cursor:pointer;
+  background:var(--surface);transition:all .12s;font-weight:600}
 .psc:hover{border-color:var(--blue);color:var(--blue)}
+.psc.active{background:var(--blue);border-color:var(--blue);color:#fff}
 
-/* ── COMPARE ── */
-.compare-table{width:100%;border-collapse:collapse;font-size:13px}
-.compare-table th{padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);background:var(--surface2);text-align:left}
-.compare-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
-.compare-table tr:last-child td{border-bottom:none}
-.exp-badge{display:inline-block;padding:2px 8px;border-radius:5px;font-family:var(--mono);font-size:12px;font-weight:700;background:var(--blue);color:#fff}
-.compare-table .raw{font-family:var(--mono);font-size:12px;color:var(--text3)}
-.compare-table .sci{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text)}
-.compare-table .label{font-size:13px;color:var(--text2)}
+/* The draggable number display */
+.number-stage{background:#1a2530;border-radius:12px;padding:28px 20px;margin-bottom:16px;
+  display:flex;flex-direction:column;align-items:center;gap:20px;position:relative;
+  overflow:hidden;min-height:180px;user-select:none}
+.number-stage::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(44,95,158,.2),transparent 60%);pointer-events:none}
 
-.insight{background:#fff8f0;border:1.5px solid #f0d8c0;border-radius:10px;padding:13px 18px;font-size:13.5px;color:#6b4400;line-height:1.65}
-.insight strong{color:#a05000}
-.insight .eq{font-family:var(--mono);font-size:13px;display:block;margin:2px 0}
+/* The digit strip */
+.digit-strip{display:flex;align-items:center;gap:2px;position:relative}
+.digit-cell{width:44px;height:64px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:28px;font-weight:800;color:#c8e0f8;
+  border-radius:8px;border:1.5px solid #2a4060;background:#0d1820;
+  position:relative;flex-shrink:0;transition:background .2s}
+.digit-cell.non-significant{color:#4a6080;background:#080f16;border-color:#1a2a3a}
+.digit-cell.coefficient{border-color:#5a8fd8;background:#0d2040}
+
+/* The decimal point — draggable */
+.decimal-dot{width:32px;height:64px;display:flex;align-items:center;justify-content:center;
+  cursor:ew-resize;position:relative;flex-shrink:0;z-index:10;touch-action:none}
+.decimal-dot-inner{width:14px;height:14px;border-radius:50%;background:#e08020;
+  box-shadow:0 0 16px rgba(224,128,32,0.8);transition:transform .15s}
+.decimal-dot:hover .decimal-dot-inner{transform:scale(1.3)}
+.decimal-dot.dragging .decimal-dot-inner{transform:scale(1.4);box-shadow:0 0 24px rgba(224,128,32,1)}
+
+/* Scientific notation result */
+.sci-result{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
+.sci-coeff{font-family:var(--mono);font-size:36px;font-weight:800;color:#e8f4ff;line-height:1}
+.sci-times{font-size:28px;color:#4a6a8a;font-weight:700}
+.sci-base{display:flex;flex-direction:column;align-items:center}
+.sci-ten{font-family:var(--mono);font-size:28px;font-weight:800;color:#7ab0e0;line-height:1}
+.sci-exp{font-family:var(--mono);font-size:28px;font-weight:800;color:#e08020;line-height:1}
+.sci-exp-label{font-size:10px;color:#4a6a8a;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+/* Hint strip */
+.hint-strip{font-size:12px;color:#4a6a8a;text-align:center;font-weight:600}
+
+/* Move counter */
+.moves-display{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+.move-tag{padding:5px 12px;border-radius:20px;font-family:var(--mono);font-size:13px;font-weight:700;
+  background:#0d1820;border:1.5px solid}
+.move-tag.left{border-color:#1a7a4a;color:#5abf8a}
+.move-tag.right{border-color:#c0392b;color:#e07060}
+.move-tag.zero{border-color:#3a5070;color:#5a7a9a}
+
+/* Rule display */
+.rule-box{padding:14px 18px;background:#fff8f0;border:1px solid #f0d8c0;
+  border-left:3px solid var(--orange);border-radius:0 9px 9px 0;
+  font-size:13px;color:#6b4400;line-height:1.65;margin-top:12px}
+.rule-box strong{color:#4a2e00}
+.rule-box .mono{font-family:var(--mono);font-size:13px;font-weight:700}
+
+/* ══ TAB 2: SCALE UNIVERSE ══════════════════════════════ */
+.scale-intro{font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.6}
+.scale-intro strong{color:var(--text)}
+
+/* The universe canvas */
+.universe-wrap{position:relative;border-radius:10px;overflow:hidden;
+  background:var(--surface2);border:1.5px solid var(--border);margin-bottom:14px}
+#universe-canvas{display:block;width:100%;cursor:pointer}
+.universe-hint{position:absolute;bottom:8px;right:10px;font-size:10px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.5px;color:var(--text3);pointer-events:none}
+
+/* Selected item info */
+.item-info{padding:14px 16px;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:10px;margin-bottom:12px;min-height:64px;display:flex;align-items:center;gap:14px}
+.ii-icon{font-size:36px;flex-shrink:0}
+.ii-main{flex:1}
+.ii-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px}
+.ii-size{font-family:var(--mono);font-size:13px;color:var(--text2)}
+.ii-sci{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--blue);margin-top:3px}
+.ii-compare{font-size:12px;color:var(--text3);margin-top:3px}
+
+/* Compare pair */
+.compare-strip{padding:12px 14px;background:#2c5f9e0a;border:1.5px solid #9ab4dc;
+  border-radius:9px;font-size:13px;color:var(--blue);font-weight:600;margin-bottom:12px;
+  display:none}
+.compare-strip.visible{display:block}
+
+.insight{background:#fff8f0;border:1px solid #f0d8c0;border-left:3px solid var(--orange);
+  border-radius:0 8px 8px 0;padding:11px 14px;font-size:13px;color:#6b4400;line-height:1.65}
+.insight strong{color:#4a2e00}
 </style>
 </head>
 <body>
-<div class="page">
-  <div class="lbl">Chapter 2 · Power Play</div>
-  <div class="title">Scientific Notation</div>
-  <div class="subtitle">Any number can be written as x × 10ʸ where 1 ≤ x < 10. This makes huge and tiny numbers easy to read and compare — the exponent tells you the scale at a glance.</div>
+<div class="app">
+  <div class="head">
+    <div class="head-ic">2</div>
+    <div>
+      <div class="lbl">Chapter 2 · Power Play</div>
+      <div class="title">Scientific Notation</div>
+    </div>
+  </div>
 
   <div class="card">
     <div class="tabs">
-      <button class="tab active" id="t0" onclick="switchTab(0)">Convert a number</button>
-      <button class="tab" id="t1" onclick="switchTab(1)">Compare magnitudes</button>
+      <button class="tab active" data-tab="dragger">Drag the decimal point</button>
+      <button class="tab" data-tab="scale">Scale of the universe</button>
     </div>
 
-    <!-- CONVERTER -->
-    <div id="v0">
+    <!-- ══ TAB 1: DECIMAL DRAGGER ══ -->
+    <div class="view active" id="view-dragger">
+      <p class="dragger-intro">
+        <strong>Scientific notation = moving the decimal point.</strong> Drag the glowing orange dot left or right — each step changes the exponent by 1. Stop when there's exactly one non-zero digit before the decimal.
+      </p>
+
       <div class="preset-row">
-        <span class="preset-lbl">Try:</span>
-        <button class="psc" onclick="setNum('5900')">5900</button>
-        <button class="psc" onclick="setNum('59853')">59853</button>
-        <button class="psc" onclick="setNum('34300000')">3430000</button>
-        <button class="psc" onclick="setNum('700400000000')">700400000000</button>
-        <button class="psc" onclick="setNum('0.001')">0.001</button>
-        <button class="psc" onclick="setNum('0.00025')">0.00025</button>
-        <button class="psc" onclick="setNum('149600000000')">Sun-Earth dist (m)</button>
+        <span class="preset-lbl">Pick a number:</span>
+        <button class="psc active" data-num="5900">5,900</button>
+        <button class="psc" data-num="3430000">34,30,000</button>
+        <button class="psc" data-num="700400000000">700,40,00,00,000</button>
+        <button class="psc" data-num="0.00025">0.00025</button>
+        <button class="psc" data-num="149600000000">Earth-Sun (m)</button>
       </div>
-      <div class="conv-layout">
-        <div class="conv-card">
-          <div class="cc-label">Ordinary number</div>
-          <input type="text" id="ordInput" value="5900" placeholder="Enter any number">
-          <div style="font-size:12px;color:var(--text3);margin-top:6px;text-align:center">type and press Enter</div>
+
+      <div class="number-stage" id="number-stage">
+        <div class="digit-strip" id="digit-strip"></div>
+        <div class="sci-result">
+          <div class="sci-coeff" id="sci-coeff">5.9</div>
+          <div class="sci-times">×</div>
+          <div class="sci-base">
+            <div style="display:flex;align-items:flex-start;gap:0">
+              <div class="sci-ten">10</div>
+              <div class="sci-exp" id="sci-exp">³</div>
+            </div>
+            <div class="sci-exp-label">exponent = <span id="sci-exp-num">3</span></div>
+          </div>
         </div>
-        <div class="conv-card">
-          <div class="cc-label">Scientific notation</div>
-          <div class="conv-result" id="sciResult">5.9 × 10³</div>
-        </div>
+        <div class="moves-display" id="moves-display"></div>
+        <div class="hint-strip" id="hint-strip">Drag the orange dot ← → to move the decimal point</div>
       </div>
-      <div class="steps-strip" id="stepsStrip"></div>
-      <div class="insight" id="insightConv">
-        <strong>Rule:</strong> Move the decimal point until you have a number between 1 and 10. Each move left = exponent +1. Each move right = exponent −1.
+
+      <div class="rule-box" id="rule-box">
+        <strong>Rule:</strong> Move the decimal left → exponent goes <span class="mono">+1</span>. Move right → exponent goes <span class="mono">−1</span>. Stop when you have exactly one digit (1–9) before the decimal point.
       </div>
     </div>
 
-    <!-- COMPARE -->
-    <div id="v1" style="display:none">
-      <div class="card-title">Famous large numbers from the textbook</div>
-      <table class="compare-table">
-        <thead><tr><th>Quantity</th><th>Ordinary form</th><th>Scientific notation</th><th>Scale</th></tr></thead>
-        <tbody id="compareBody"></tbody>
-      </table>
-      <div class="insight" style="margin-top:14px">
-        <strong>The exponent is the most important part.</strong> To compare two numbers in scientific notation, first compare their exponents. The one with the larger exponent is much bigger — changing the exponent by 1 multiplies the number by 10, while changing the coefficient from 1 to 9 only multiplies it by 9.
+    <!-- ══ TAB 2: SCALE ══ -->
+    <div class="view" id="view-scale">
+      <p class="scale-intro">
+        <strong>Every step down is 10 times smaller.</strong> Click any object to select it — then click another to see how many times bigger one is than the other. The exponent gap tells you the answer instantly.
+      </p>
+
+      <div class="universe-wrap">
+        <canvas id="universe-canvas" height="340"></canvas>
+        <div class="universe-hint">Click to select · Click two to compare</div>
+      </div>
+
+      <div class="item-info" id="item-info">
+        <div class="ii-icon" id="ii-icon">👆</div>
+        <div class="ii-main">
+          <div class="ii-name" id="ii-name">Click any object above</div>
+          <div class="ii-size" id="ii-size"></div>
+          <div class="ii-sci" id="ii-sci"></div>
+          <div class="ii-compare" id="ii-compare"></div>
+        </div>
+      </div>
+
+      <div class="compare-strip" id="compare-strip"></div>
+
+      <div class="insight">
+        <strong>Reading the exponent:</strong> If object A has exponent 3 and object B has exponent 8, then B is 10⁵ = 100,000 times bigger than A — just subtract the exponents. That's the power of scientific notation: comparison becomes subtraction.
       </div>
     </div>
   </div>
 </div>
 
 <script>
-function toSci(numStr){
-  const n=parseFloat(numStr);
-  if(isNaN(n)||n===0) return {coeff:0,exp:0,str:'0'};
-  const exp=Math.floor(Math.log10(Math.abs(n)));
-  const coeff=n/Math.pow(10,exp);
-  const coeffRound=Math.round(coeff*10000)/10000;
-  return {coeff:coeffRound,exp,str:`${coeffRound} × 10${sup(exp)}`};
-}
-function sup(n){
-  const map={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻','10':'¹⁰','11':'¹¹','12':'¹²'};
+// ═══════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('view-' + tab.dataset.tab).classList.add('active');
+    if(tab.dataset.tab === 'scale') drawUniverse();
+  });
+});
+
+// ═══════════════════════════════════════════════════════
+// TAB 1: DECIMAL DRAGGER
+// ═══════════════════════════════════════════════════════
+let currentNum = '5900';
+let decimalPos = 0;   // position from the LEFT among digits (fractional = before digit 0)
+let digits = [];      // array of digit characters (no decimal, no leading zeros removed)
+let originalDecimalPos = 0; // where decimal was in original number
+
+function supChar(n){
+  const map={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
   return String(n).split('').map(c=>map[c]||c).join('');
 }
 
-function setNum(v){
-  document.getElementById('ordInput').value=v;
-  convert();
+function parseNumber(s){
+  // Convert string to digits array and original decimal position
+  const n = parseFloat(s);
+  if(isNaN(n)) return;
+
+  // Represent as integer string with known decimal pos
+  // Strategy: find all significant digits
+  let str = Math.abs(n).toPrecision(8).replace(/\.?0+$/, '');
+
+  // Get digits and decimal position
+  let dotPos = str.indexOf('.');
+  let digitStr = str.replace('.', '');
+
+  // Remove trailing zeros but keep at least 2 digits
+  while(digitStr.length > 2 && digitStr[digitStr.length-1] === '0'){
+    digitStr = digitStr.slice(0,-1);
+  }
+
+  if(dotPos === -1) dotPos = digitStr.length; // decimal at the end
+
+  // For numbers like 0.00025: toPrecision gives something like 0.00025000
+  // We want significant digits only
+  // Recompute using exponential notation
+  const expStr = n.toExponential(5).replace(/\.?0+e/, 'e');
+  const [coeffStr, expPart] = expStr.split('e');
+  const exp = parseInt(expPart);
+  const cleanCoeff = coeffStr.replace('.', '');
+  // Remove trailing zeros
+  let sigDigits = cleanCoeff.replace(/0+$/, '');
+  // decimal in scientific notation is after first digit
+  // in our array: decimal starts after position 1 (index 1 = after first digit)
+  // original decimal position from left = 1 (one digit before decimal in sci notation)
+  // but we need to offset by exp
+  // e.g. 5900 = 5.9 × 10^3 → sigDigits = "59", exp = 3
+  // decimal was originally after position 4 (5900.)
+  // in our array of ["5","9"]: originalDecimalPos = 1 + 3 = 4? No...
+  // decimalPos counts "number of digits before decimal point in current array display"
+  // For 5900: digits=["5","9","0","0"], decimalPos=4 (decimal after all four digits)
+  // For 5.9×10^3: decimalPos=1 (decimal after first digit)
+  // 
+
+  // Let's just work with sigDigits and track where original decimal was
+  // sigDigits for 5900 = "59"
+  // exp = 3
+  // originalDecimalPos = sigDigits.length + (exp - (sigDigits.length - 1)) ... this is getting complex
+
+  // Simpler: just use the original string representation
+  digits = sigDigits.split('');
+  // In the original number, decimal was at position: exp + 1 (from left of sig digits)
+  // e.g. 5900: exp=3, sigDigits="59", decimal was after position 4 (5900.)
+  // We represent as if digits = ["5","9"] and decimal position in the sig-digit array
+  // decimalPos = 1 means "1 digit before decimal" (=5.9)
+  // decimalPos = 4 means "4 digits before decimal" (=5900. = 5900)
+  // decimalPos = exp + 1
+  originalDecimalPos = exp + 1;
+  decimalPos = originalDecimalPos;
+
+  buildStrip();
+  updateSciDisplay();
 }
-window.setNum=setNum;
 
-function convert(){
-  const raw=document.getElementById('ordInput').value.trim();
-  const n=parseFloat(raw);
-  if(isNaN(n)||n===0){document.getElementById('sciResult').textContent='—';return;}
-  const {coeff,exp,str}=toSci(raw);
-  document.getElementById('sciResult').textContent=str;
+function buildStrip(){
+  const strip = document.getElementById('digit-strip');
+  strip.innerHTML = '';
 
-  // Steps
-  const absN=Math.abs(n);
-  const steps=[];
-  steps.push({num:'1',text:'Write the number',val:raw});
-  steps.push({num:'2',text:`Identify the exponent: 10${sup(exp)} ≈ ${n.toExponential(0)}`,val:`exponent = ${exp}`});
-  steps.push({num:'3',text:`Divide by 10${sup(exp)} to get the coefficient`,val:`${coeff}`});
-  steps.push({num:'4',text:`Check: 1 ≤ ${coeff} < 10?`,val:coeff>=1&&coeff<10?'Yes ✓':`Adjust: ${coeff} → correct`});
-  steps.push({num:'5',text:`Final answer`,val:str});
+  // Determine effective decimal position in the displayed strip
+  // decimalPos: number of digit cells to the left of the decimal dot
 
-  const strip=document.getElementById('stepsStrip');
-  strip.innerHTML=steps.map(s=>`<div class="step-row"><span class="step-num">${s.num}.</span><span class="step-text">${s.text}</span><span class="step-val">${s.val}</span></div>`).join('');
+  // We may need padding zeros on left (if decimalPos < 1) or right (if decimalPos > digits.length)
+  const leftPad = Math.max(0, 1 - decimalPos);
+  const rightPad = Math.max(0, decimalPos - digits.length);
+  const totalDigits = leftPad + digits.length + rightPad;
+  const effectivePos = decimalPos + leftPad; // position in the padded array
+
+  const allDigits = [
+    ...Array(leftPad).fill('0'),
+    ...digits,
+    ...Array(rightPad).fill('0'),
+  ];
+
+  // Build cells interleaved with decimal dot
+  allDigits.forEach((d, i) => {
+    if(i === effectivePos){
+      // Insert decimal dot
+      const dot = buildDecimalDot();
+      strip.appendChild(dot);
+    }
+    const cell = document.createElement('div');
+    cell.className = 'digit-cell';
+    // Highlight coefficient digits (the one before decimal and some after)
+    const isCoeff = (i >= effectivePos - 1 && i <= effectivePos + 2);
+    if(isCoeff) cell.classList.add('coefficient');
+    else cell.classList.add('non-significant');
+    cell.textContent = d;
+    strip.appendChild(cell);
+  });
+
+  // If decimal is at the very end (after all digits)
+  if(effectivePos >= allDigits.length){
+    const dot = buildDecimalDot();
+    strip.appendChild(dot);
+  }
 }
 
-document.getElementById('ordInput').addEventListener('input',convert);
-document.getElementById('ordInput').addEventListener('keydown',e=>{if(e.key==='Enter')convert();});
+// Dragging state
+let isDragging = false;
+let dragStartX = 0;
+let dragStartPos = 0;
+let currentDotEl = null;
+const CELL_PX = 46; // width of digit cell + gap
 
-// Compare table data
-const FACTS=[
-  {label:'Thickness of paper',raw:'0.001 cm',n:1e-3,unit:'cm'},
-  {label:'Height of a person',raw:'170 cm',n:170,unit:'cm'},
-  {label:'Height of Burj Khalifa',raw:'83000 cm',n:83000,unit:'cm'},
-  {label:'Distance Earth–Moon',raw:'38440000000 cm',n:3.844e10,unit:'cm'},
-  {label:'Distance Earth–Sun',raw:'149600000000 m',n:1.496e11,unit:'m'},
-  {label:'Distance Sun–Saturn',raw:'1433500000000 m',n:1.4335e12,unit:'m'},
-  {label:'Stars in the universe',raw:'200000000000000000000000',n:2e23,unit:'stars'},
-  {label:'Grains of sand on Earth',raw:'10²¹',n:1e21,unit:'grains'},
-  {label:'Global ant population',raw:'20000000000000000',n:2e16,unit:'ants'},
-  {label:'Age of the universe',raw:'4.35×10¹⁷ seconds',n:4.35e17,unit:'seconds'},
+function buildDecimalDot(){
+  const dot = document.createElement('div');
+  dot.className = 'decimal-dot';
+  const inner = document.createElement('div');
+  inner.className = 'decimal-dot-inner';
+  dot.appendChild(inner);
+
+  dot.addEventListener('pointerdown', e => {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartPos = decimalPos;
+    currentDotEl = dot;
+    dot.classList.add('dragging');
+    dot.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  dot.addEventListener('pointermove', e => {
+    if(!isDragging) return;
+    const dx = e.clientX - dragStartX;
+    const steps = Math.round(dx / CELL_PX);
+    const newPos = Math.max(0, Math.min(digits.length + 3, dragStartPos + steps));
+    if(newPos !== decimalPos){
+      decimalPos = newPos;
+      buildStrip();
+      updateSciDisplay();
+    }
+  });
+  dot.addEventListener('pointerup', () => {
+    isDragging = false;
+    if(currentDotEl) currentDotEl.classList.remove('dragging');
+    currentDotEl = null;
+  });
+  return dot;
+}
+
+function updateSciDisplay(){
+  // The coefficient: value with decimal at position 1
+  // scientific exponent = decimalPos - 1
+  const exp = decimalPos - 1;
+  const expN = originalDecimalPos - 1; // exponent of original number
+
+  // Build coefficient string
+  const leftPad = Math.max(0, 1 - decimalPos);
+  const allDigits = [...Array(leftPad).fill('0'), ...digits];
+  const effectivePos = decimalPos + leftPad;
+  // digits before decimal in current position
+  let beforeDecimal = allDigits.slice(0, effectivePos).join('') || '0';
+  let afterDecimal = allDigits.slice(effectivePos).join('');
+  // Remove trailing zeros from after
+  afterDecimal = afterDecimal.replace(/0+$/, '');
+  const coeffStr = afterDecimal ? `${beforeDecimal}.${afterDecimal}` : beforeDecimal;
+
+  document.getElementById('sci-coeff').textContent = coeffStr;
+  document.getElementById('sci-exp').textContent = supChar(exp);
+  document.getElementById('sci-exp-num').textContent = exp;
+
+  // Colour exponent: orange if original, blue otherwise
+  const isCorrect = decimalPos === 1 + 0; // coeff between 1 and 10 means exactly 1 digit before decimal
+  const firstDigitBeforeDecimal = parseInt(beforeDecimal);
+  const isValid = firstDigitBeforeDecimal >= 1 && firstDigitBeforeDecimal <= 9 && beforeDecimal.length === 1;
+  document.getElementById('sci-exp').style.color = isValid ? '#5abf8a' : '#e08020';
+  document.getElementById('sci-coeff').style.color = isValid ? '#c8e0f8' : '#e08020';
+
+  // Moves display
+  const moves = decimalPos - originalDecimalPos;
+  const movesEl = document.getElementById('moves-display');
+  movesEl.innerHTML = '';
+
+  const moveTag = document.createElement('div');
+  if(moves === 0){
+    moveTag.className = 'move-tag zero';
+    moveTag.textContent = 'Start position';
+  } else if(moves < 0){
+    moveTag.className = 'move-tag right';
+    moveTag.textContent = `Moved ${Math.abs(moves)} right → exponent ${moves < 0 ? '' : '+'}${moves}`;
+  } else {
+    moveTag.className = 'move-tag left';
+    moveTag.textContent = `Moved ${moves} left → exponent +${moves}`;
+  }
+  movesEl.appendChild(moveTag);
+
+  const targetTag = document.createElement('div');
+  targetTag.className = 'move-tag zero';
+  targetTag.style.borderColor = isValid ? '#1a7a4a' : '#3a5070';
+  targetTag.style.color = isValid ? '#5abf8a' : '#5a7a9a';
+  targetTag.textContent = isValid ? `✓ Scientific notation: ${coeffStr} × 10${supChar(exp)}` : `Target: 1 digit before decimal`;
+  movesEl.appendChild(targetTag);
+
+  // Hint
+  document.getElementById('hint-strip').textContent =
+    isValid ? `Done! ${coeffStr} × 10${supChar(exp)} is the scientific notation.` :
+    parseInt(beforeDecimal) > 9 ? `Too many digits before the decimal — drag left` :
+    parseInt(beforeDecimal) === 0 || beforeDecimal === '0' ? `No digits before decimal — drag right` :
+    `Drag the orange dot left or right to adjust`;
+}
+
+// Preset buttons
+document.querySelectorAll('.psc').forEach(btn => {
+  if(!btn.dataset.num) return;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.psc').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentNum = btn.dataset.num;
+    parseNumber(currentNum);
+  });
+});
+
+// Init
+parseNumber('5900');
+
+// ═══════════════════════════════════════════════════════
+// TAB 2: SCALE UNIVERSE
+// ═══════════════════════════════════════════════════════
+const SCALE_ITEMS = [
+  {name:'Virus',          icon:'🦠', exp:-7, desc:'~100 nm = 10⁻⁷ m', size:'0.0000001 m'},
+  {name:'Bacterium',      icon:'🔬', exp:-6, desc:'~1 µm = 10⁻⁶ m',   size:'0.000001 m'},
+  {name:'Width of hair',  icon:'💇', exp:-4, desc:'~0.1 mm = 10⁻⁴ m', size:'0.0001 m'},
+  {name:'Ant',            icon:'🐜', exp:-3, desc:'~1 mm = 10⁻³ m',   size:'0.001 m'},
+  {name:'Your finger',    icon:'👆', exp:-2, desc:'~1 cm = 10⁻² m',   size:'0.01 m'},
+  {name:'Person',         icon:'🧍', exp:0,  desc:'~1 m = 10⁰ m',    size:'1 m'},
+  {name:'Classroom',      icon:'🏫', exp:1,  desc:'~10 m = 10¹ m',   size:'10 m'},
+  {name:'Football field', icon:'⚽', exp:2,  desc:'~100 m = 10² m',  size:'100 m'},
+  {name:'Tall mountain',  icon:'⛰️', exp:3,  desc:'~1 km = 10³ m',   size:'1,000 m'},
+  {name:'City width',     icon:'🏙️', exp:4,  desc:'~10 km = 10⁴ m',  size:'10,000 m'},
+  {name:'India (width)',  icon:'🗺️', exp:6,  desc:'~3000 km = 3×10⁶ m', size:'3,000,000 m'},
+  {name:'Earth diameter', icon:'🌍', exp:7,  desc:'~10,000 km = 10⁷ m', size:'12,742,000 m'},
+  {name:'Earth to Moon',  icon:'🌙', exp:8,  desc:'~384,000 km = 4×10⁸ m', size:'384,400,000 m'},
+  {name:'Earth to Sun',   icon:'☀️', exp:11, desc:'~150 million km = 1.5×10¹¹ m', size:'149,600,000,000 m'},
 ];
 
-function buildCompare(){
-  const tbody=document.getElementById('compareBody');
-  tbody.innerHTML='';
-  FACTS.forEach(f=>{
-    const exp=Math.floor(Math.log10(f.n));
-    const coeff=f.n/Math.pow(10,exp);
-    const tr=document.createElement('tr');
-    tr.innerHTML=`
-      <td class="label">${f.label}</td>
-      <td class="raw">${f.raw}</td>
-      <td class="sci">${(Math.round(coeff*1000)/1000)} × 10${sup(exp)} ${f.unit}</td>
-      <td><span class="exp-badge">10${sup(exp)}</span></td>`;
-    tbody.appendChild(tr);
+const uCanvas = document.getElementById('universe-canvas');
+const uctx = uCanvas.getContext('2d');
+const uPR = window.devicePixelRatio || 1;
+
+let selectedItems = []; // indices into SCALE_ITEMS, max 2
+let hitAreas2 = [];
+
+function drawUniverse(){
+  const W = uCanvas.parentElement.clientWidth;
+  const H = 340;
+  uCanvas.style.width = W + 'px';
+  uCanvas.style.height = H + 'px';
+  uCanvas.width = W * uPR;
+  uCanvas.height = H * uPR;
+  uctx.resetTransform();
+  uctx.scale(uPR, uPR);
+
+  // Background gradient — space to earth colours
+  const bg = uctx.createLinearGradient(0,0,W,0);
+  bg.addColorStop(0,   '#0a0a1a');  // deep space (small = microscopic)
+  bg.addColorStop(0.3, '#0d1f45');
+  bg.addColorStop(0.55,'#1a4080');
+  bg.addColorStop(0.75,'#4a80c0');
+  bg.addColorStop(0.88,'#a0c4e0');
+  bg.addColorStop(1,   '#d4e8f8');  // cosmic scale
+  uctx.fillStyle = bg;
+  uctx.fillRect(0, 0, W, H);
+
+  // Stars (left half = micro scale)
+  uctx.fillStyle='rgba(255,255,255,0.4)';
+  [[0.02,0.1],[0.05,0.4],[0.08,0.7],[0.12,0.2],[0.15,0.6],[0.18,0.9],[0.22,0.15]].forEach(([fx,fy])=>{
+    uctx.beginPath();
+    uctx.arc(fx*W,fy*H,1,0,Math.PI*2);
+    uctx.fill();
   });
+
+  const N = SCALE_ITEMS.length;
+  const cellW = W / N;
+  hitAreas2 = [];
+
+  SCALE_ITEMS.forEach((item, i) => {
+    const cx = cellW * i + cellW/2;
+    const isSel = selectedItems.includes(i);
+
+    // Column highlight
+    if(isSel){
+      uctx.fillStyle = 'rgba(224,128,32,0.15)';
+      uctx.fillRect(cellW*i, 0, cellW, H);
+    }
+    hitAreas2.push({i, x:cellW*i, y:0, w:cellW, h:H});
+
+    // Circle scaled by magnitude (log scale circle radius)
+    const MIN_EXP = -7, MAX_EXP = 11;
+    const t = (item.exp - MIN_EXP) / (MAX_EXP - MIN_EXP);
+    const circR = 6 + t * 38; // 6px to 44px
+    const cy = H * 0.42;
+
+    // Shadow for selected
+    if(isSel){
+      uctx.beginPath();
+      uctx.arc(cx, cy, circR+6, 0, Math.PI*2);
+      uctx.fillStyle='rgba(224,128,32,0.3)';
+      uctx.fill();
+    }
+
+    // Circle
+    uctx.beginPath();
+    uctx.arc(cx, cy, circR, 0, Math.PI*2);
+    const circGrad = uctx.createRadialGradient(cx-circR*0.3,cy-circR*0.3,0,cx,cy,circR);
+    if(isSel){
+      circGrad.addColorStop(0,'#ffd080');
+      circGrad.addColorStop(1,'#e08020');
+    } else {
+      circGrad.addColorStop(0,'rgba(180,200,230,0.9)');
+      circGrad.addColorStop(1,'rgba(80,120,180,0.7)');
+    }
+    uctx.fillStyle = circGrad;
+    uctx.fill();
+    uctx.strokeStyle = isSel ? '#ffa040' : 'rgba(255,255,255,0.3)';
+    uctx.lineWidth = isSel ? 2 : 1;
+    uctx.stroke();
+
+    // Icon
+    const iconSize = Math.max(14, Math.min(28, circR * 1.1));
+    uctx.font = `${iconSize}px serif`;
+    uctx.textAlign = 'center';
+    uctx.textBaseline = 'middle';
+    uctx.fillText(item.icon, cx, cy);
+
+    // Exponent label below circle
+    const lblY = cy + circR + 14;
+    uctx.font = `bold 10px DM Mono, monospace`;
+    uctx.textAlign='center';
+    uctx.textBaseline='top';
+    uctx.fillStyle = isSel ? '#ffa040' : 'rgba(255,255,255,0.55)';
+    uctx.fillText('10'+supChar(item.exp), cx, lblY);
+
+    // Name label
+    const nameY = lblY + 14;
+    uctx.font = `${isSel?'bold ':''}9px DM Sans, sans-serif`;
+    uctx.fillStyle = isSel ? '#ffd080' : 'rgba(255,255,255,0.4)';
+    // Wrap long names
+    const words = item.name.split(' ');
+    words.forEach((word, wi) => {
+      uctx.fillText(word, cx, nameY + wi*10);
+    });
+
+    // Axis line
+    uctx.strokeStyle='rgba(255,255,255,0.15)';
+    uctx.lineWidth=1;
+    uctx.beginPath();
+    uctx.moveTo(cellW*i, H*0.85);
+    uctx.lineTo(cellW*i, H*0.9);
+    uctx.stroke();
+  });
+
+  // Horizontal axis
+  uctx.strokeStyle='rgba(255,255,255,0.2)';
+  uctx.lineWidth=1.5;
+  uctx.beginPath();
+  uctx.moveTo(0, H*0.87);
+  uctx.lineTo(W, H*0.87);
+  uctx.stroke();
+
+  // "Smaller ←" and "→ Bigger" labels
+  uctx.font='bold 10px DM Sans';
+  uctx.fillStyle='rgba(255,255,255,0.35)';
+  uctx.textAlign='left'; uctx.textBaseline='bottom';
+  uctx.fillText('← Smaller (microscopic)', 8, H-6);
+  uctx.textAlign='right';
+  uctx.fillText('Larger (cosmic) →', W-8, H-6);
+
+  updateItemInfo();
+  updateCompareStrip();
 }
 
-function switchTab(i){
-  ['t0','t1'].forEach((id,j)=>{document.getElementById(id).classList.toggle('active',j===i);document.getElementById('v'+j).style.display=j===i?'block':'none';});
-  if(i===1)buildCompare();
+function updateItemInfo(){
+  if(selectedItems.length === 0){
+    document.getElementById('ii-name').textContent = 'Click any object above';
+    document.getElementById('ii-icon').textContent = '👆';
+    document.getElementById('ii-size').textContent = '';
+    document.getElementById('ii-sci').textContent = '';
+    document.getElementById('ii-compare').textContent = '';
+    return;
+  }
+  const item = SCALE_ITEMS[selectedItems[selectedItems.length-1]];
+  document.getElementById('ii-icon').textContent = item.icon;
+  document.getElementById('ii-name').textContent = item.name;
+  document.getElementById('ii-size').textContent = item.size;
+  document.getElementById('ii-sci').textContent = item.desc;
+  document.getElementById('ii-compare').textContent =
+    selectedItems.length === 2 ? '' : 'Click another object to compare sizes';
 }
 
-convert();
+function updateCompareStrip(){
+  const strip = document.getElementById('compare-strip');
+  if(selectedItems.length < 2){
+    strip.classList.remove('visible');
+    return;
+  }
+  const a = SCALE_ITEMS[selectedItems[0]];
+  const b = SCALE_ITEMS[selectedItems[1]];
+  const [small, big] = a.exp <= b.exp ? [a,b] : [b,a];
+  const diff = big.exp - small.exp;
+  strip.classList.add('visible');
+  strip.innerHTML = `
+    <strong>${big.icon} ${big.name}</strong> is <strong>10${supChar(diff)} = ${(Math.pow(10,diff)).toLocaleString('en-IN')}</strong> times bigger than <strong>${small.icon} ${small.name}</strong>.
+    <br>Exponents: ${big.name} = 10${supChar(big.exp)}, ${small.name} = 10${supChar(small.exp)} — subtract: ${big.exp} − ${small.exp} = <strong>${diff}</strong>.
+  `;
+}
+
+uCanvas.addEventListener('click', e => {
+  const rect = uCanvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  for(const hit of hitAreas2){
+    if(mx >= hit.x && mx < hit.x+hit.w){
+      if(selectedItems.includes(hit.i)){
+        selectedItems = selectedItems.filter(x => x !== hit.i);
+      } else {
+        if(selectedItems.length >= 2) selectedItems = [selectedItems[1], hit.i];
+        else selectedItems.push(hit.i);
+      }
+      drawUniverse();
+      return;
+    }
+  }
+});
+
+new ResizeObserver(() => {
+  if(document.getElementById('view-scale').classList.contains('active')) drawUniverse();
+}).observe(uCanvas.parentElement);
 </script>
 </body>
 </html>
