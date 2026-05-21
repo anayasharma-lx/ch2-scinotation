@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Scientific Notation — Ganita Prakash Grade 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;--border:#d8d4cc;
+  --text:#1a1814;--text2:#5a5650;--text3:#9a958e;
+  --blue:#2c5f9e;--red:#c0392b;--green:#1a7a4a;--orange:#e08020;
+  --font:'DM Sans',-apple-system,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5}
+.page{max-width:860px;margin:0 auto;padding:28px 20px}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
+.title{font-size:22px;font-weight:700;margin-bottom:5px}
+.subtitle{font-size:14px;color:var(--text2);margin-bottom:22px;max-width:560px;line-height:1.5}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
+.card-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:14px}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:4px;margin-bottom:20px}
+.tab{flex:1;padding:7px 0;text-align:center;font-size:13px;font-weight:500;color:var(--text2);border-radius:7px;cursor:pointer;border:none;background:none;font-family:var(--font);transition:all .12s}
+.tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.08);border:1.5px solid var(--border)}
+
+/* ── CONVERTER ── */
+.conv-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+@media(max-width:560px){.conv-layout{grid-template-columns:1fr}}
+.conv-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:16px}
+.conv-card .cc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px}
+.conv-card input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:16px;font-weight:700;background:var(--surface);color:var(--text);outline:none;text-align:center}
+.conv-card input:focus{border-color:var(--blue)}
+.conv-result{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--blue);margin-top:8px;text-align:center;line-height:1.3}
+
+/* Steps display */
+.steps-strip{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.step-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.step-row:last-child{border-bottom:none}
+.step-num{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text3);min-width:20px}
+.step-text{color:var(--text2);flex:1}
+.step-val{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--blue)}
+
+/* Preset numbers */
+.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.preset-lbl{font-size:12px;color:var(--text3);font-weight:500}
+.psc{padding:4px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--mono);font-size:12px;background:var(--surface);color:var(--text2);cursor:pointer}
+.psc:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ── COMPARE ── */
+.compare-table{width:100%;border-collapse:collapse;font-size:13px}
+.compare-table th{padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);background:var(--surface2);text-align:left}
+.compare-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.compare-table tr:last-child td{border-bottom:none}
+.exp-badge{display:inline-block;padding:2px 8px;border-radius:5px;font-family:var(--mono);font-size:12px;font-weight:700;background:var(--blue);color:#fff}
+.compare-table .raw{font-family:var(--mono);font-size:12px;color:var(--text3)}
+.compare-table .sci{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text)}
+.compare-table .label{font-size:13px;color:var(--text2)}
+
+.insight{background:#fff8f0;border:1.5px solid #f0d8c0;border-radius:10px;padding:13px 18px;font-size:13.5px;color:#6b4400;line-height:1.65}
+.insight strong{color:#a05000}
+.insight .eq{font-family:var(--mono);font-size:13px;display:block;margin:2px 0}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="lbl">Chapter 2 · Power Play</div>
+  <div class="title">Scientific Notation</div>
+  <div class="subtitle">Any number can be written as x × 10ʸ where 1 ≤ x < 10. This makes huge and tiny numbers easy to read and compare — the exponent tells you the scale at a glance.</div>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" id="t0" onclick="switchTab(0)">Convert a number</button>
+      <button class="tab" id="t1" onclick="switchTab(1)">Compare magnitudes</button>
+    </div>
+
+    <!-- CONVERTER -->
+    <div id="v0">
+      <div class="preset-row">
+        <span class="preset-lbl">Try:</span>
+        <button class="psc" onclick="setNum('5900')">5900</button>
+        <button class="psc" onclick="setNum('59853')">59853</button>
+        <button class="psc" onclick="setNum('34300000')">3430000</button>
+        <button class="psc" onclick="setNum('700400000000')">700400000000</button>
+        <button class="psc" onclick="setNum('0.001')">0.001</button>
+        <button class="psc" onclick="setNum('0.00025')">0.00025</button>
+        <button class="psc" onclick="setNum('149600000000')">Sun-Earth dist (m)</button>
+      </div>
+      <div class="conv-layout">
+        <div class="conv-card">
+          <div class="cc-label">Ordinary number</div>
+          <input type="text" id="ordInput" value="5900" placeholder="Enter any number">
+          <div style="font-size:12px;color:var(--text3);margin-top:6px;text-align:center">type and press Enter</div>
+        </div>
+        <div class="conv-card">
+          <div class="cc-label">Scientific notation</div>
+          <div class="conv-result" id="sciResult">5.9 × 10³</div>
+        </div>
+      </div>
+      <div class="steps-strip" id="stepsStrip"></div>
+      <div class="insight" id="insightConv">
+        <strong>Rule:</strong> Move the decimal point until you have a number between 1 and 10. Each move left = exponent +1. Each move right = exponent −1.
+      </div>
+    </div>
+
+    <!-- COMPARE -->
+    <div id="v1" style="display:none">
+      <div class="card-title">Famous large numbers from the textbook</div>
+      <table class="compare-table">
+        <thead><tr><th>Quantity</th><th>Ordinary form</th><th>Scientific notation</th><th>Scale</th></tr></thead>
+        <tbody id="compareBody"></tbody>
+      </table>
+      <div class="insight" style="margin-top:14px">
+        <strong>The exponent is the most important part.</strong> To compare two numbers in scientific notation, first compare their exponents. The one with the larger exponent is much bigger — changing the exponent by 1 multiplies the number by 10, while changing the coefficient from 1 to 9 only multiplies it by 9.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toSci(numStr){
+  const n=parseFloat(numStr);
+  if(isNaN(n)||n===0) return {coeff:0,exp:0,str:'0'};
+  const exp=Math.floor(Math.log10(Math.abs(n)));
+  const coeff=n/Math.pow(10,exp);
+  const coeffRound=Math.round(coeff*10000)/10000;
+  return {coeff:coeffRound,exp,str:`${coeffRound} × 10${sup(exp)}`};
+}
+function sup(n){
+  const map={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻','10':'¹⁰','11':'¹¹','12':'¹²'};
+  return String(n).split('').map(c=>map[c]||c).join('');
+}
+
+function setNum(v){
+  document.getElementById('ordInput').value=v;
+  convert();
+}
+window.setNum=setNum;
+
+function convert(){
+  const raw=document.getElementById('ordInput').value.trim();
+  const n=parseFloat(raw);
+  if(isNaN(n)||n===0){document.getElementById('sciResult').textContent='—';return;}
+  const {coeff,exp,str}=toSci(raw);
+  document.getElementById('sciResult').textContent=str;
+
+  // Steps
+  const absN=Math.abs(n);
+  const steps=[];
+  steps.push({num:'1',text:'Write the number',val:raw});
+  steps.push({num:'2',text:`Identify the exponent: 10${sup(exp)} ≈ ${n.toExponential(0)}`,val:`exponent = ${exp}`});
+  steps.push({num:'3',text:`Divide by 10${sup(exp)} to get the coefficient`,val:`${coeff}`});
+  steps.push({num:'4',text:`Check: 1 ≤ ${coeff} < 10?`,val:coeff>=1&&coeff<10?'Yes ✓':`Adjust: ${coeff} → correct`});
+  steps.push({num:'5',text:`Final answer`,val:str});
+
+  const strip=document.getElementById('stepsStrip');
+  strip.innerHTML=steps.map(s=>`<div class="step-row"><span class="step-num">${s.num}.</span><span class="step-text">${s.text}</span><span class="step-val">${s.val}</span></div>`).join('');
+}
+
+document.getElementById('ordInput').addEventListener('input',convert);
+document.getElementById('ordInput').addEventListener('keydown',e=>{if(e.key==='Enter')convert();});
+
+// Compare table data
+const FACTS=[
+  {label:'Thickness of paper',raw:'0.001 cm',n:1e-3,unit:'cm'},
+  {label:'Height of a person',raw:'170 cm',n:170,unit:'cm'},
+  {label:'Height of Burj Khalifa',raw:'83000 cm',n:83000,unit:'cm'},
+  {label:'Distance Earth–Moon',raw:'38440000000 cm',n:3.844e10,unit:'cm'},
+  {label:'Distance Earth–Sun',raw:'149600000000 m',n:1.496e11,unit:'m'},
+  {label:'Distance Sun–Saturn',raw:'1433500000000 m',n:1.4335e12,unit:'m'},
+  {label:'Stars in the universe',raw:'200000000000000000000000',n:2e23,unit:'stars'},
+  {label:'Grains of sand on Earth',raw:'10²¹',n:1e21,unit:'grains'},
+  {label:'Global ant population',raw:'20000000000000000',n:2e16,unit:'ants'},
+  {label:'Age of the universe',raw:'4.35×10¹⁷ seconds',n:4.35e17,unit:'seconds'},
+];
+
+function buildCompare(){
+  const tbody=document.getElementById('compareBody');
+  tbody.innerHTML='';
+  FACTS.forEach(f=>{
+    const exp=Math.floor(Math.log10(f.n));
+    const coeff=f.n/Math.pow(10,exp);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td class="label">${f.label}</td>
+      <td class="raw">${f.raw}</td>
+      <td class="sci">${(Math.round(coeff*1000)/1000)} × 10${sup(exp)} ${f.unit}</td>
+      <td><span class="exp-badge">10${sup(exp)}</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function switchTab(i){
+  ['t0','t1'].forEach((id,j)=>{document.getElementById(id).classList.toggle('active',j===i);document.getElementById('v'+j).style.display=j===i?'block':'none';});
+  if(i===1)buildCompare();
+}
+
+convert();
+</script>
+</body>
+</html>
