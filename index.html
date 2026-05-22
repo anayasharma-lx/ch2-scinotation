@@ -5,678 +5,443 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Scientific Notation — Ganita Prakash Grade 8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;--border:#d8d4cc;
-  --text:#1a1814;--text2:#5a5650;--text3:#9a958e;
-  --blue:#2c5f9e;--red:#c0392b;--green:#1a7a4a;--orange:#e08020;
-  --font:'DM Sans',-apple-system,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+  --paper:#faf8f4;--paper2:#f3f0ea;--paper3:#e8e3d8;--ink:#1c1a16;--ink2:#4a4640;--ink3:#8a8580;--rule:#d4cfc5;
+  --teal:#1d6a72;--teal2:#2a8a94;--teal-bg:#e8f4f5;--rust:#b84a2a;--rust-bg:#fdf0ec;--gold:#c08030;--gold-bg:#fdf5e8;--sage:#3a6a48;--sage-bg:#eaf2ec;
+  --font:'DM Sans',sans-serif;--serif:'Lora',Georgia,serif;--mono:'DM Mono',ui-monospace,monospace;--shadow:0 2px 12px rgba(28,26,22,.08);
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);
-  min-height:100vh;-webkit-font-smoothing:antialiased;padding:24px 16px 60px;line-height:1.5}
+body{font-family:var(--font);background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;padding:28px 20px 60px;line-height:1.6;background-image:radial-gradient(circle at 20% 30%,rgba(192,128,48,.04) 0,transparent 50%),radial-gradient(circle at 80% 70%,rgba(29,106,114,.04) 0,transparent 50%)}
 .app{max-width:940px;margin:0 auto}
-
-.head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.head-ic{width:42px;height:42px;border-radius:10px;background:var(--surface2);
-  border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-weight:600;color:var(--text2);font-size:16px;flex-shrink:0}
-.lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:2px}
-.title{font-size:22px;font-weight:700;line-height:1.2}
-.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
-
-/* Tabs */
-.tabs{display:flex;gap:4px;background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:10px;padding:4px;margin-bottom:20px}
-.tab{flex:1;padding:9px 8px;border:none;background:transparent;border-radius:7px;
-  font-family:var(--font);font-size:13px;font-weight:600;color:var(--text2);
-  cursor:pointer;transition:all .15s;text-align:center}
-.tab.active{background:var(--surface);color:var(--text);
-  box-shadow:0 1px 3px rgba(0,0,0,.08);border:1.5px solid var(--border)}
-
-.view{display:none}
-.view.active{display:block}
-
-/* ══ TAB 1: DECIMAL DRAGGER ════════════════════════════ */
-.dragger-intro{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
-.dragger-intro strong{color:var(--text)}
-
-/* Preset numbers */
-.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
-.preset-lbl{font-size:12px;color:var(--text3);font-weight:600;white-space:nowrap}
-.psc{padding:5px 12px;border:1.5px solid var(--border);border-radius:7px;
-  font-family:var(--mono);font-size:12px;color:var(--text2);cursor:pointer;
-  background:var(--surface);transition:all .12s;font-weight:600}
-.psc:hover{border-color:var(--blue);color:var(--blue)}
-.psc.active{background:var(--blue);border-color:var(--blue);color:#fff}
-
-/* The draggable number display */
-.number-stage{background:#1a2530;border-radius:12px;padding:28px 20px;margin-bottom:16px;
-  display:flex;flex-direction:column;align-items:center;gap:20px;position:relative;
-  overflow:hidden;min-height:180px;user-select:none}
-.number-stage::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(44,95,158,.2),transparent 60%);pointer-events:none}
-
-/* The digit strip */
-.digit-strip{display:flex;align-items:center;gap:2px;position:relative}
-.digit-cell{width:44px;height:64px;display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-size:28px;font-weight:800;color:#c8e0f8;
-  border-radius:8px;border:1.5px solid #2a4060;background:#0d1820;
-  position:relative;flex-shrink:0;transition:background .2s}
-.digit-cell.non-significant{color:#4a6080;background:#080f16;border-color:#1a2a3a}
-.digit-cell.coefficient{border-color:#5a8fd8;background:#0d2040}
-
-/* The decimal point — draggable */
-.decimal-dot{width:32px;height:64px;display:flex;align-items:center;justify-content:center;
-  cursor:ew-resize;position:relative;flex-shrink:0;z-index:10;touch-action:none}
-.decimal-dot-inner{width:14px;height:14px;border-radius:50%;background:#e08020;
-  box-shadow:0 0 16px rgba(224,128,32,0.8);transition:transform .15s}
-.decimal-dot:hover .decimal-dot-inner{transform:scale(1.3)}
-.decimal-dot.dragging .decimal-dot-inner{transform:scale(1.4);box-shadow:0 0 24px rgba(224,128,32,1)}
-
-/* Scientific notation result */
-.sci-result{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
-.sci-coeff{font-family:var(--mono);font-size:36px;font-weight:800;color:#e8f4ff;line-height:1}
-.sci-times{font-size:28px;color:#4a6a8a;font-weight:700}
-.sci-base{display:flex;flex-direction:column;align-items:center}
-.sci-ten{font-family:var(--mono);font-size:28px;font-weight:800;color:#7ab0e0;line-height:1}
-.sci-exp{font-family:var(--mono);font-size:28px;font-weight:800;color:#e08020;line-height:1}
-.sci-exp-label{font-size:10px;color:#4a6a8a;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-
-/* Hint strip */
-.hint-strip{font-size:12px;color:#4a6a8a;text-align:center;font-weight:600}
-
-/* Move counter */
-.moves-display{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
-.move-tag{padding:5px 12px;border-radius:20px;font-family:var(--mono);font-size:13px;font-weight:700;
-  background:#0d1820;border:1.5px solid}
-.move-tag.left{border-color:#1a7a4a;color:#5abf8a}
-.move-tag.right{border-color:#c0392b;color:#e07060}
-.move-tag.zero{border-color:#3a5070;color:#5a7a9a}
-
-/* Rule display */
-.rule-box{padding:14px 18px;background:#fff8f0;border:1px solid #f0d8c0;
-  border-left:3px solid var(--orange);border-radius:0 9px 9px 0;
-  font-size:13px;color:#6b4400;line-height:1.65;margin-top:12px}
-.rule-box strong{color:#4a2e00}
-.rule-box .mono{font-family:var(--mono);font-size:13px;font-weight:700}
-
-/* ══ TAB 2: SCALE UNIVERSE ══════════════════════════════ */
-.scale-intro{font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.6}
-.scale-intro strong{color:var(--text)}
-
-/* The universe canvas */
-.universe-wrap{position:relative;border-radius:10px;overflow:hidden;
-  background:var(--surface2);border:1.5px solid var(--border);margin-bottom:14px}
-#universe-canvas{display:block;width:100%;cursor:pointer}
-.universe-hint{position:absolute;bottom:8px;right:10px;font-size:10px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.5px;color:var(--text3);pointer-events:none}
-
-/* Selected item info */
-.item-info{padding:14px 16px;background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:10px;margin-bottom:12px;min-height:64px;display:flex;align-items:center;gap:14px}
-.ii-icon{font-size:36px;flex-shrink:0}
-.ii-main{flex:1}
-.ii-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px}
-.ii-size{font-family:var(--mono);font-size:13px;color:var(--text2)}
-.ii-sci{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--blue);margin-top:3px}
-.ii-compare{font-size:12px;color:var(--text3);margin-top:3px}
-
-/* Compare pair */
-.compare-strip{padding:12px 14px;background:#2c5f9e0a;border:1.5px solid #9ab4dc;
-  border-radius:9px;font-size:13px;color:var(--blue);font-weight:600;margin-bottom:12px;
-  display:none}
-.compare-strip.visible{display:block}
-
-.insight{background:#fff8f0;border:1px solid #f0d8c0;border-left:3px solid var(--orange);
-  border-radius:0 8px 8px 0;padding:11px 14px;font-size:13px;color:#6b4400;line-height:1.65}
+.header{margin-bottom:22px;padding-bottom:18px;border-bottom:1.5px solid var(--rule)}
+.chapter-badge{display:inline-flex;align-items:center;gap:8px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:20px;padding:4px 14px 4px 10px;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+.badge-num{width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center}
+h1{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.3px;line-height:1.2;margin-bottom:5px}
+.header-sub{font-size:14px;color:var(--ink2);max-width:560px;line-height:1.55}
+.card{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.tabs{display:flex;gap:3px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:12px;padding:4px;margin-bottom:22px}
+.tab{flex:1;padding:10px;border:none;background:transparent;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .18s;text-align:center}
+.tab:hover{color:var(--ink2)}
+.tab.active{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(28,26,22,.10);border:1.5px solid var(--rule)}
+.view{display:none}.view.active{display:block}
+.concept{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:20px;font-family:var(--serif);font-style:italic;font-size:14px;color:#4a3010;line-height:1.65}
+.concept strong{font-style:normal;font-weight:700;color:#3a2008}
+.insight{background:var(--gold-bg);border:1px solid #e0c080;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 15px;font-size:13px;color:#6b4400;line-height:1.65;margin-top:16px}
 .insight strong{color:#4a2e00}
+
+/* SCALE TAB */
+.zoom-strip{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.zoom-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);white-space:nowrap}
+.zoom-slider{flex:1;min-width:120px;accent-color:var(--teal);height:5px;cursor:pointer}
+.zoom-val{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--teal);white-space:nowrap;min-width:100px}
+.zoom-btns{display:flex;gap:5px}
+.zoom-btn{padding:5px 12px;border:1.5px solid var(--rule);border-radius:7px;background:var(--paper);font-family:var(--font);font-size:12px;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .12s}
+.zoom-btn:hover{border-color:var(--teal);color:var(--teal)}
+.nl-wrap{position:relative;border-radius:12px;overflow:hidden;margin-bottom:14px;cursor:default;border:1.5px solid var(--rule)}
+#nl-canvas{display:block;width:100%}
+.nl-info{min-height:72px;padding:12px 16px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:10px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
+.nl-emoji{font-size:32px;flex-shrink:0;line-height:1;margin-top:2px}
+.nl-text strong{font-size:14px;font-weight:700;color:var(--ink);display:block;margin-bottom:1px}
+.nl-text .nl-sci{font-family:var(--mono);font-size:12px;color:var(--teal);font-weight:700}
+.nl-text .nl-detail{font-size:12px;color:var(--ink3)}
+.cmp-bar{padding:12px 16px;background:#fff;border:2px solid var(--teal);border-radius:10px;display:none;text-align:center}
+.cmp-bar.show{display:block}
+.cmp-big{font-family:var(--mono);font-size:18px;font-weight:800;color:var(--teal)}
+.cmp-sub{font-size:12px;color:var(--ink2);margin-top:3px}
+
+/* DRAG TAB */
+.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.preset-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);white-space:nowrap}
+.psc{padding:5px 13px;border:1.5px solid var(--rule);border-radius:20px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink2);cursor:pointer;background:var(--paper);transition:all .12s}
+.psc:hover{border-color:var(--teal);color:var(--teal)}
+.psc.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.challenge-prompt{background:var(--paper2);border:1.5px solid var(--rule);border-radius:10px;padding:13px 16px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cp-num{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--ink)}
+.cp-target{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--teal)}
+.cp-hint{font-size:11px;color:var(--ink3)}
+.dragger-stage{background:#111a22;border-radius:14px;padding:24px 16px 20px;margin-bottom:14px;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;overflow:hidden;user-select:none;min-height:180px;cursor:ew-resize}
+.dragger-stage::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(29,106,114,.2),transparent 55%);pointer-events:none}
+.tile-row{display:flex;align-items:center;gap:4px}
+.dtile{width:44px;height:62px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:26px;font-weight:800;border-radius:8px;border:1.5px solid;flex-shrink:0;transition:all .15s}
+.dtile.bright{background:#0d2040;border-color:var(--teal);color:#e8f8ff}
+.dtile.mid{background:#0a1828;border-color:#2a4060;color:#7aA0c0}
+.dtile.dim{background:#060d14;border-color:#141e28;color:#1e2e40}
+.decimal-pin{width:16px;height:62px;display:flex;align-items:center;justify-content:center;flex-shrink:0;pointer-events:none}
+.dp-dot{width:11px;height:11px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px rgba(192,128,48,.9)}
+.sci-readout{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.25);border-radius:10px;padding:10px 16px;width:100%;border:1.5px solid #1a2a3a}
+.sr-coeff{font-family:var(--mono);font-size:28px;font-weight:800;color:#c8e0f8;transition:color .2s;letter-spacing:-.5px}
+.sr-coeff.ok{color:#5abe8a}
+.sr-x{font-size:20px;color:#2a4a6a;font-weight:700}
+.sr-base{display:flex;align-items:flex-start}
+.sr-ten{font-family:var(--mono);font-size:20px;font-weight:800;color:#5a88c0}
+.sr-exp{font-family:var(--mono);font-size:20px;font-weight:800;color:var(--gold);transition:color .2s}
+.sr-exp.ok{color:#5abe8a}
+.drag-status{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center}
+.ds-pill{padding:4px 11px;border-radius:20px;font-family:var(--mono);font-size:11px;font-weight:700;border:1.5px solid}
+.ds-idle{background:#0a1828;border-color:#1a3050;color:#4a6a90}
+.ds-good{background:#081a10;border-color:#1a6a30;color:#5abe8a}
+.ds-warn{background:#1a0800;border-color:#6a3000;color:#d08020}
+@keyframes confPop{0%{transform:scale(0);opacity:1}100%{transform:scale(2);opacity:0}}
+.conf{position:absolute;pointer-events:none;font-size:24px;animation:confPop .7s ease forwards}
+.success-card{background:var(--sage-bg);border:2px solid var(--sage);border-radius:12px;padding:14px 18px;text-align:center;display:none;margin-top:2px}
+.success-card.show{display:block}
+.sc-title{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--sage);margin-bottom:5px}
+.sc-eq{font-family:var(--mono);font-size:20px;font-weight:800;color:var(--teal);margin-bottom:5px}
+.sc-explain{font-size:12px;color:#2a4a30;line-height:1.6}
+.rule-box{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 9px 9px 0;padding:12px 15px;font-size:13px;color:#6b4400;line-height:1.65}
+.rule-box strong{color:#4a2e00}
+.rule-box code{font-family:var(--mono);font-weight:700;background:rgba(192,128,48,.15);padding:1px 5px;border-radius:4px}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="head">
-    <div class="head-ic">2</div>
-    <div>
-      <div class="lbl">Chapter 2 · Power Play</div>
-      <div class="title">Scientific Notation</div>
-    </div>
+  <div class="header">
+    <div class="chapter-badge"><div class="badge-num">2</div>Chapter 2 · Power Play</div>
+    <h1>Scientific Notation</h1>
+    <p class="header-sub">Why write 1.5 × 10¹¹ instead of 150,000,000,000? The exponent carries the meaning — and makes comparison effortless.</p>
   </div>
-
   <div class="card">
     <div class="tabs">
-      <button class="tab active" data-tab="dragger">Drag the decimal point</button>
-      <button class="tab" data-tab="scale">Scale of the universe</button>
+      <button class="tab active" data-tab="scale">Zoom the number line</button>
+      <button class="tab" data-tab="drag">Find the scientific notation</button>
     </div>
 
-    <!-- ══ TAB 1: DECIMAL DRAGGER ══ -->
-    <div class="view active" id="view-dragger">
-      <p class="dragger-intro">
-        <strong>Scientific notation = moving the decimal point.</strong> Drag the glowing orange dot left or right — each step changes the exponent by 1. Stop when there's exactly one non-zero digit before the decimal.
-      </p>
+    <div class="view active" id="view-scale">
+      <div class="concept"><strong>Zoom in and out of the scale of the universe.</strong> Each slider step moves one power of 10 — objects appear and disappear as you pass their scale. Click two objects to see how many times bigger one is.</div>
+      <div class="zoom-strip">
+        <span class="zoom-label">Zoom</span>
+        <input type="range" class="zoom-slider" id="zoom-sl" min="-7" max="13" step="0.04" value="0">
+        <span class="zoom-val" id="zoom-val">~10⁰ m scale</span>
+        <div class="zoom-btns">
+          <button class="zoom-btn" id="zoom-in">← smaller</button>
+          <button class="zoom-btn" id="zoom-out">larger →</button>
+        </div>
+      </div>
+      <div class="nl-wrap"><canvas id="nl-canvas" height="260"></canvas></div>
+      <div class="nl-info" id="nl-info">
+        <div class="nl-emoji" id="nl-emoji">👆</div>
+        <div class="nl-text">
+          <strong id="nl-name">Drag the slider or click an object</strong>
+          <div class="nl-sci" id="nl-sci"></div>
+          <div class="nl-detail" id="nl-detail">Use arrow keys or buttons. Objects appear when you zoom to their scale.</div>
+        </div>
+      </div>
+      <div class="cmp-bar" id="cmp-bar"><div class="cmp-big" id="cmp-big"></div><div class="cmp-sub" id="cmp-sub"></div></div>
+      <div class="insight"><strong>The zoom trick:</strong> zooming from 10⁰ (person) to 10¹¹ (Earth-Sun) takes 11 full steps — that gap is 100,000,000,000 times. Scientific notation makes it just a subtraction: 11 − 0 = 11. The exponent IS the number of steps.</div>
+    </div>
 
+    <div class="view" id="view-drag">
+      <div class="concept"><strong>Drag the digits until one sits before the decimal.</strong> The gold dot is the decimal point — it stays fixed. Slide the number left or right until exactly one non-zero digit is before the gold dot. Then the exponent lights up green.</div>
       <div class="preset-row">
-        <span class="preset-lbl">Pick a number:</span>
-        <button class="psc active" data-num="5900">5,900</button>
-        <button class="psc" data-num="3430000">34,30,000</button>
-        <button class="psc" data-num="700400000000">700,40,00,00,000</button>
-        <button class="psc" data-num="0.00025">0.00025</button>
-        <button class="psc" data-num="149600000000">Earth-Sun (m)</button>
+        <span class="preset-lbl">Pick:</span>
+        <button class="psc active" data-num="5900" data-label="5,900">5,900</button>
+        <button class="psc" data-num="34300000" data-label="3,43,00,000">3,43,00,000</button>
+        <button class="psc" data-num="149600000000" data-label="Earth–Sun (m)">Earth–Sun</button>
+        <button class="psc" data-num="0.000012" data-label="0.000012">0.000012</button>
+        <button class="psc" data-num="602200000000000000000000" data-label="Avogadro">Avogadro</button>
       </div>
-
-      <div class="number-stage" id="number-stage">
-        <div class="digit-strip" id="digit-strip"></div>
-        <div class="sci-result">
-          <div class="sci-coeff" id="sci-coeff">5.9</div>
-          <div class="sci-times">×</div>
-          <div class="sci-base">
-            <div style="display:flex;align-items:flex-start;gap:0">
-              <div class="sci-ten">10</div>
-              <div class="sci-exp" id="sci-exp">³</div>
-            </div>
-            <div class="sci-exp-label">exponent = <span id="sci-exp-num">3</span></div>
-          </div>
-        </div>
-        <div class="moves-display" id="moves-display"></div>
-        <div class="hint-strip" id="hint-strip">Drag the orange dot ← → to move the decimal point</div>
+      <div class="challenge-prompt">
+        <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);margin-bottom:3px">Write in scientific notation</div><div class="cp-num" id="cp-num">5,900</div></div>
+        <div style="font-size:20px;color:var(--ink3)">→</div>
+        <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);margin-bottom:3px">Target form</div><div class="cp-target">d.ddd × 10ⁿ</div><div class="cp-hint">d must be 1–9</div></div>
       </div>
-
-      <div class="rule-box" id="rule-box">
-        <strong>Rule:</strong> Move the decimal left → exponent goes <span class="mono">+1</span>. Move right → exponent goes <span class="mono">−1</span>. Stop when you have exactly one digit (1–9) before the decimal point.
+      <div class="dragger-stage" id="dragger-stage">
+        <div class="tile-row" id="tile-row"></div>
+        <div class="sci-readout"><div class="sr-coeff" id="sr-coeff">5900</div><div class="sr-x">×</div><div class="sr-base"><div class="sr-ten">10</div><div class="sr-exp" id="sr-exp">⁰</div></div></div>
+        <div class="drag-status" id="drag-status"></div>
       </div>
-    </div>
-
-    <!-- ══ TAB 2: SCALE ══ -->
-    <div class="view" id="view-scale">
-      <p class="scale-intro">
-        <strong>Every step down is 10 times smaller.</strong> Click any object to select it — then click another to see how many times bigger one is than the other. The exponent gap tells you the answer instantly.
-      </p>
-
-      <div class="universe-wrap">
-        <canvas id="universe-canvas" height="340"></canvas>
-        <div class="universe-hint">Click to select · Click two to compare</div>
-      </div>
-
-      <div class="item-info" id="item-info">
-        <div class="ii-icon" id="ii-icon">👆</div>
-        <div class="ii-main">
-          <div class="ii-name" id="ii-name">Click any object above</div>
-          <div class="ii-size" id="ii-size"></div>
-          <div class="ii-sci" id="ii-sci"></div>
-          <div class="ii-compare" id="ii-compare"></div>
-        </div>
-      </div>
-
-      <div class="compare-strip" id="compare-strip"></div>
-
-      <div class="insight">
-        <strong>Reading the exponent:</strong> If object A has exponent 3 and object B has exponent 8, then B is 10⁵ = 100,000 times bigger than A — just subtract the exponents. That's the power of scientific notation: comparison becomes subtraction.
-      </div>
+      <div class="success-card" id="success-card"><div class="sc-title">Found it! ✓</div><div class="sc-eq" id="sc-eq"></div><div class="sc-explain" id="sc-explain"></div></div>
+      <div class="rule-box"><strong>The rule:</strong> slide left → decimal moves right past digits → exponent goes up by 1 each step. Slide right → exponent goes down. Stop at <code>d.dd × 10ⁿ</code>.</div>
     </div>
   </div>
 </div>
-
 <script>
-// ═══════════════════════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════════════════════
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+function sup(n){return String(n).split('').map(c=>({'−':'⁻','-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}[c]||c)).join('')}
+const PR=Math.min(window.devicePixelRatio||1,2);
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     tab.classList.add('active');
-    document.getElementById('view-' + tab.dataset.tab).classList.add('active');
-    if(tab.dataset.tab === 'scale') drawUniverse();
+    document.getElementById('view-'+tab.dataset.tab).classList.add('active');
+    if(tab.dataset.tab==='scale')drawNL();
   });
 });
 
-// ═══════════════════════════════════════════════════════
-// TAB 1: DECIMAL DRAGGER
-// ═══════════════════════════════════════════════════════
-let currentNum = '5900';
-let decimalPos = 0;   // position from the LEFT among digits (fractional = before digit 0)
-let digits = [];      // array of digit characters (no decimal, no leading zeros removed)
-let originalDecimalPos = 0; // where decimal was in original number
-
-function supChar(n){
-  const map={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
-  return String(n).split('').map(c=>map[c]||c).join('');
-}
-
-function parseNumber(s){
-  // Convert string to digits array and original decimal position
-  const n = parseFloat(s);
-  if(isNaN(n)) return;
-
-  // Represent as integer string with known decimal pos
-  // Strategy: find all significant digits
-  let str = Math.abs(n).toPrecision(8).replace(/\.?0+$/, '');
-
-  // Get digits and decimal position
-  let dotPos = str.indexOf('.');
-  let digitStr = str.replace('.', '');
-
-  // Remove trailing zeros but keep at least 2 digits
-  while(digitStr.length > 2 && digitStr[digitStr.length-1] === '0'){
-    digitStr = digitStr.slice(0,-1);
-  }
-
-  if(dotPos === -1) dotPos = digitStr.length; // decimal at the end
-
-  // For numbers like 0.00025: toPrecision gives something like 0.00025000
-  // We want significant digits only
-  // Recompute using exponential notation
-  const expStr = n.toExponential(5).replace(/\.?0+e/, 'e');
-  const [coeffStr, expPart] = expStr.split('e');
-  const exp = parseInt(expPart);
-  const cleanCoeff = coeffStr.replace('.', '');
-  // Remove trailing zeros
-  let sigDigits = cleanCoeff.replace(/0+$/, '');
-  // decimal in scientific notation is after first digit
-  // in our array: decimal starts after position 1 (index 1 = after first digit)
-  // original decimal position from left = 1 (one digit before decimal in sci notation)
-  // but we need to offset by exp
-  // e.g. 5900 = 5.9 × 10^3 → sigDigits = "59", exp = 3
-  // decimal was originally after position 4 (5900.)
-  // in our array of ["5","9"]: originalDecimalPos = 1 + 3 = 4? No...
-  // decimalPos counts "number of digits before decimal point in current array display"
-  // For 5900: digits=["5","9","0","0"], decimalPos=4 (decimal after all four digits)
-  // For 5.9×10^3: decimalPos=1 (decimal after first digit)
-  // 
-
-  // Let's just work with sigDigits and track where original decimal was
-  // sigDigits for 5900 = "59"
-  // exp = 3
-  // originalDecimalPos = sigDigits.length + (exp - (sigDigits.length - 1)) ... this is getting complex
-
-  // Simpler: just use the original string representation
-  digits = sigDigits.split('');
-  // In the original number, decimal was at position: exp + 1 (from left of sig digits)
-  // e.g. 5900: exp=3, sigDigits="59", decimal was after position 4 (5900.)
-  // We represent as if digits = ["5","9"] and decimal position in the sig-digit array
-  // decimalPos = 1 means "1 digit before decimal" (=5.9)
-  // decimalPos = 4 means "4 digits before decimal" (=5900. = 5900)
-  // decimalPos = exp + 1
-  originalDecimalPos = exp + 1;
-  decimalPos = originalDecimalPos;
-
-  buildStrip();
-  updateSciDisplay();
-}
-
-function buildStrip(){
-  const strip = document.getElementById('digit-strip');
-  strip.innerHTML = '';
-
-  // Determine effective decimal position in the displayed strip
-  // decimalPos: number of digit cells to the left of the decimal dot
-
-  // We may need padding zeros on left (if decimalPos < 1) or right (if decimalPos > digits.length)
-  const leftPad = Math.max(0, 1 - decimalPos);
-  const rightPad = Math.max(0, decimalPos - digits.length);
-  const totalDigits = leftPad + digits.length + rightPad;
-  const effectivePos = decimalPos + leftPad; // position in the padded array
-
-  const allDigits = [
-    ...Array(leftPad).fill('0'),
-    ...digits,
-    ...Array(rightPad).fill('0'),
-  ];
-
-  // Build cells interleaved with decimal dot
-  allDigits.forEach((d, i) => {
-    if(i === effectivePos){
-      // Insert decimal dot
-      const dot = buildDecimalDot();
-      strip.appendChild(dot);
-    }
-    const cell = document.createElement('div');
-    cell.className = 'digit-cell';
-    // Highlight coefficient digits (the one before decimal and some after)
-    const isCoeff = (i >= effectivePos - 1 && i <= effectivePos + 2);
-    if(isCoeff) cell.classList.add('coefficient');
-    else cell.classList.add('non-significant');
-    cell.textContent = d;
-    strip.appendChild(cell);
-  });
-
-  // If decimal is at the very end (after all digits)
-  if(effectivePos >= allDigits.length){
-    const dot = buildDecimalDot();
-    strip.appendChild(dot);
-  }
-}
-
-// Dragging state
-let isDragging = false;
-let dragStartX = 0;
-let dragStartPos = 0;
-let currentDotEl = null;
-const CELL_PX = 46; // width of digit cell + gap
-
-function buildDecimalDot(){
-  const dot = document.createElement('div');
-  dot.className = 'decimal-dot';
-  const inner = document.createElement('div');
-  inner.className = 'decimal-dot-inner';
-  dot.appendChild(inner);
-
-  dot.addEventListener('pointerdown', e => {
-    isDragging = true;
-    dragStartX = e.clientX;
-    dragStartPos = decimalPos;
-    currentDotEl = dot;
-    dot.classList.add('dragging');
-    dot.setPointerCapture(e.pointerId);
-    e.preventDefault();
-  });
-  dot.addEventListener('pointermove', e => {
-    if(!isDragging) return;
-    const dx = e.clientX - dragStartX;
-    const steps = Math.round(dx / CELL_PX);
-    const newPos = Math.max(0, Math.min(digits.length + 3, dragStartPos + steps));
-    if(newPos !== decimalPos){
-      decimalPos = newPos;
-      buildStrip();
-      updateSciDisplay();
-    }
-  });
-  dot.addEventListener('pointerup', () => {
-    isDragging = false;
-    if(currentDotEl) currentDotEl.classList.remove('dragging');
-    currentDotEl = null;
-  });
-  return dot;
-}
-
-function updateSciDisplay(){
-  // The coefficient: value with decimal at position 1
-  // scientific exponent = decimalPos - 1
-  const exp = decimalPos - 1;
-  const expN = originalDecimalPos - 1; // exponent of original number
-
-  // Build coefficient string
-  const leftPad = Math.max(0, 1 - decimalPos);
-  const allDigits = [...Array(leftPad).fill('0'), ...digits];
-  const effectivePos = decimalPos + leftPad;
-  // digits before decimal in current position
-  let beforeDecimal = allDigits.slice(0, effectivePos).join('') || '0';
-  let afterDecimal = allDigits.slice(effectivePos).join('');
-  // Remove trailing zeros from after
-  afterDecimal = afterDecimal.replace(/0+$/, '');
-  const coeffStr = afterDecimal ? `${beforeDecimal}.${afterDecimal}` : beforeDecimal;
-
-  document.getElementById('sci-coeff').textContent = coeffStr;
-  document.getElementById('sci-exp').textContent = supChar(exp);
-  document.getElementById('sci-exp-num').textContent = exp;
-
-  // Colour exponent: orange if original, blue otherwise
-  const isCorrect = decimalPos === 1 + 0; // coeff between 1 and 10 means exactly 1 digit before decimal
-  const firstDigitBeforeDecimal = parseInt(beforeDecimal);
-  const isValid = firstDigitBeforeDecimal >= 1 && firstDigitBeforeDecimal <= 9 && beforeDecimal.length === 1;
-  document.getElementById('sci-exp').style.color = isValid ? '#5abf8a' : '#e08020';
-  document.getElementById('sci-coeff').style.color = isValid ? '#c8e0f8' : '#e08020';
-
-  // Moves display
-  const moves = decimalPos - originalDecimalPos;
-  const movesEl = document.getElementById('moves-display');
-  movesEl.innerHTML = '';
-
-  const moveTag = document.createElement('div');
-  if(moves === 0){
-    moveTag.className = 'move-tag zero';
-    moveTag.textContent = 'Start position';
-  } else if(moves < 0){
-    moveTag.className = 'move-tag right';
-    moveTag.textContent = `Moved ${Math.abs(moves)} right → exponent ${moves < 0 ? '' : '+'}${moves}`;
-  } else {
-    moveTag.className = 'move-tag left';
-    moveTag.textContent = `Moved ${moves} left → exponent +${moves}`;
-  }
-  movesEl.appendChild(moveTag);
-
-  const targetTag = document.createElement('div');
-  targetTag.className = 'move-tag zero';
-  targetTag.style.borderColor = isValid ? '#1a7a4a' : '#3a5070';
-  targetTag.style.color = isValid ? '#5abf8a' : '#5a7a9a';
-  targetTag.textContent = isValid ? `✓ Scientific notation: ${coeffStr} × 10${supChar(exp)}` : `Target: 1 digit before decimal`;
-  movesEl.appendChild(targetTag);
-
-  // Hint
-  document.getElementById('hint-strip').textContent =
-    isValid ? `Done! ${coeffStr} × 10${supChar(exp)} is the scientific notation.` :
-    parseInt(beforeDecimal) > 9 ? `Too many digits before the decimal — drag left` :
-    parseInt(beforeDecimal) === 0 || beforeDecimal === '0' ? `No digits before decimal — drag right` :
-    `Drag the orange dot left or right to adjust`;
-}
-
-// Preset buttons
-document.querySelectorAll('.psc').forEach(btn => {
-  if(!btn.dataset.num) return;
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.psc').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentNum = btn.dataset.num;
-    parseNumber(currentNum);
-  });
-});
-
-// Init
-parseNumber('5900');
-
-// ═══════════════════════════════════════════════════════
-// TAB 2: SCALE UNIVERSE
-// ═══════════════════════════════════════════════════════
-const SCALE_ITEMS = [
-  {name:'Virus',          icon:'🦠', exp:-7, desc:'~100 nm = 10⁻⁷ m', size:'0.0000001 m'},
-  {name:'Bacterium',      icon:'🔬', exp:-6, desc:'~1 µm = 10⁻⁶ m',   size:'0.000001 m'},
-  {name:'Width of hair',  icon:'💇', exp:-4, desc:'~0.1 mm = 10⁻⁴ m', size:'0.0001 m'},
-  {name:'Ant',            icon:'🐜', exp:-3, desc:'~1 mm = 10⁻³ m',   size:'0.001 m'},
-  {name:'Your finger',    icon:'👆', exp:-2, desc:'~1 cm = 10⁻² m',   size:'0.01 m'},
-  {name:'Person',         icon:'🧍', exp:0,  desc:'~1 m = 10⁰ m',    size:'1 m'},
-  {name:'Classroom',      icon:'🏫', exp:1,  desc:'~10 m = 10¹ m',   size:'10 m'},
-  {name:'Football field', icon:'⚽', exp:2,  desc:'~100 m = 10² m',  size:'100 m'},
-  {name:'Tall mountain',  icon:'⛰️', exp:3,  desc:'~1 km = 10³ m',   size:'1,000 m'},
-  {name:'City width',     icon:'🏙️', exp:4,  desc:'~10 km = 10⁴ m',  size:'10,000 m'},
-  {name:'India (width)',  icon:'🗺️', exp:6,  desc:'~3000 km = 3×10⁶ m', size:'3,000,000 m'},
-  {name:'Earth diameter', icon:'🌍', exp:7,  desc:'~10,000 km = 10⁷ m', size:'12,742,000 m'},
-  {name:'Earth to Moon',  icon:'🌙', exp:8,  desc:'~384,000 km = 4×10⁸ m', size:'384,400,000 m'},
-  {name:'Earth to Sun',   icon:'☀️', exp:11, desc:'~150 million km = 1.5×10¹¹ m', size:'149,600,000,000 m'},
+// SCALE TAB
+const OBJECTS=[
+  {exp:-7,emoji:'🦠',name:'Virus',sci:'~10⁻⁷ m',detail:'100 nm. 800 viruses fit across one hair.'},
+  {exp:-5,emoji:'🧫',name:'Blood cell',sci:'~10⁻⁵ m',detail:'8 µm. A drop of blood has 5 million.'},
+  {exp:-3,emoji:'🐜',name:'Ant',sci:'~10⁻³ m',detail:'1–2 mm. Ants can lift 50× their weight.'},
+  {exp:-1,emoji:'🤚',name:'Your hand',sci:'~10⁻¹ m',detail:'About 18 cm — almost 10⁰ = 1 m scale.'},
+  {exp:0, emoji:'🧍',name:'Person',sci:'~10⁰ m',detail:'~1.7 m. Our reference point — 10⁰ = 1.'},
+  {exp:2, emoji:'⚽',name:'Football field',sci:'~10² m',detail:'100 m long. 100 people end to end.'},
+  {exp:4, emoji:'⛰️',name:'Everest',sci:'~10⁴ m',detail:'8,849 m. Light travels this in 0.00003 s.'},
+  {exp:6, emoji:'🌏',name:'India width',sci:'~3×10⁶ m',detail:'~3,000 km. 3 hours by plane.'},
+  {exp:7, emoji:'🌍',name:'Earth diameter',sci:'~10⁷ m',detail:'12,742 km. Light circles it 7.5×/sec.'},
+  {exp:8, emoji:'🌙',name:'Earth to Moon',sci:'~4×10⁸ m',detail:'384,400 km. Apollo took 3 days.'},
+  {exp:11,emoji:'☀️',name:'Earth to Sun',sci:'1.5×10¹¹ m',detail:'150M km. Light takes 8 min 20 sec.'},
+  {exp:13,emoji:'🌌',name:'Solar system',sci:'~10¹³ m',detail:'Oort Cloud extends ~10¹³ m from Sun.'},
 ];
 
-const uCanvas = document.getElementById('universe-canvas');
-const uctx = uCanvas.getContext('2d');
-const uPR = window.devicePixelRatio || 1;
+let zoomExp=0,hoveredObj=null,clickedObj=null,prevClicked=null,nlHits=[],animating=false,targetZoom=0;
 
-let selectedItems = []; // indices into SCALE_ITEMS, max 2
-let hitAreas2 = [];
+function drawNL(){
+  const canvas=document.getElementById('nl-canvas');
+  const W=canvas.parentElement.clientWidth;
+  const H=260;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  canvas.width=W*PR;canvas.height=H*PR;
+  const ctx=canvas.getContext('2d');
+  ctx.resetTransform();ctx.scale(PR,PR);
 
-function drawUniverse(){
-  const W = uCanvas.parentElement.clientWidth;
-  const H = 340;
-  uCanvas.style.width = W + 'px';
-  uCanvas.style.height = H + 'px';
-  uCanvas.width = W * uPR;
-  uCanvas.height = H * uPR;
-  uctx.resetTransform();
-  uctx.scale(uPR, uPR);
+  // Always dark — space background
+  ctx.fillStyle='#111922';
+  ctx.fillRect(0,0,W,H);
 
-  // Background gradient — space to earth colours
-  const bg = uctx.createLinearGradient(0,0,W,0);
-  bg.addColorStop(0,   '#0a0a1a');  // deep space (small = microscopic)
-  bg.addColorStop(0.3, '#0d1f45');
-  bg.addColorStop(0.55,'#1a4080');
-  bg.addColorStop(0.75,'#4a80c0');
-  bg.addColorStop(0.88,'#a0c4e0');
-  bg.addColorStop(1,   '#d4e8f8');  // cosmic scale
-  uctx.fillStyle = bg;
-  uctx.fillRect(0, 0, W, H);
-
-  // Stars (left half = micro scale)
-  uctx.fillStyle='rgba(255,255,255,0.4)';
-  [[0.02,0.1],[0.05,0.4],[0.08,0.7],[0.12,0.2],[0.15,0.6],[0.18,0.9],[0.22,0.15]].forEach(([fx,fy])=>{
-    uctx.beginPath();
-    uctx.arc(fx*W,fy*H,1,0,Math.PI*2);
-    uctx.fill();
+  // Faint star field
+  ctx.fillStyle='rgba(255,255,255,.45)';
+  [[.05,.15],[.13,.6],[.22,.1],[.33,.42],[.45,.22],[.56,.72],[.68,.14],[.79,.56],[.88,.32],[.95,.78]].forEach(([fx,fy])=>{
+    ctx.beginPath();ctx.arc(fx*W,fy*H,1.2,0,Math.PI*2);ctx.fill();
   });
 
-  const N = SCALE_ITEMS.length;
-  const cellW = W / N;
-  hitAreas2 = [];
+  const AXIS_Y=H*0.55;
+  const WIN=2.2;
+  const expLo=zoomExp-WIN,expHi=zoomExp+WIN;
+  function eX(e){return(e-expLo)/(expHi-expLo)*W;}
 
-  SCALE_ITEMS.forEach((item, i) => {
-    const cx = cellW * i + cellW/2;
-    const isSel = selectedItems.includes(i);
+  // Axis line — always visible white
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(0,AXIS_Y);ctx.lineTo(W,AXIS_Y);ctx.stroke();
 
-    // Column highlight
-    if(isSel){
-      uctx.fillStyle = 'rgba(224,128,32,0.15)';
-      uctx.fillRect(cellW*i, 0, cellW, H);
+  // Integer ticks
+  for(let e=Math.ceil(expLo);e<=Math.floor(expHi);e++){
+    const x=eX(e);if(x<0||x>W)continue;
+    ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x,AXIS_Y-6);ctx.lineTo(x,AXIS_Y+6);ctx.stroke();
+    ctx.font='bold 10px DM Mono,monospace';
+    ctx.fillStyle='rgba(255,255,255,.55)';
+    ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.fillText('10'+sup(e),x,AXIS_Y+9);
+  }
+
+  // Sub-ticks
+  for(let e=Math.floor(expLo);e<=Math.ceil(expHi);e++){
+    for(let s=2;s<10;s++){
+      const se=e+Math.log10(s);if(se<expLo||se>expHi)continue;
+      const x=eX(se);
+      ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=0.5;
+      ctx.beginPath();ctx.moveTo(x,AXIS_Y-2);ctx.lineTo(x,AXIS_Y+2);ctx.stroke();
     }
-    hitAreas2.push({i, x:cellW*i, y:0, w:cellW, h:H});
+  }
 
-    // Circle scaled by magnitude (log scale circle radius)
-    const MIN_EXP = -7, MAX_EXP = 11;
-    const t = (item.exp - MIN_EXP) / (MAX_EXP - MIN_EXP);
-    const circR = 6 + t * 38; // 6px to 44px
-    const cy = H * 0.42;
+  // Zoom cursor (gold dashed line)
+  const curX=eX(zoomExp);
+  ctx.strokeStyle='rgba(192,128,48,.7)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(curX,6);ctx.lineTo(curX,AXIS_Y-6);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.beginPath();ctx.arc(curX,AXIS_Y,5,0,Math.PI*2);
+  ctx.fillStyle='rgba(192,128,48,.9)';ctx.fill();
 
-    // Shadow for selected
-    if(isSel){
-      uctx.beginPath();
-      uctx.arc(cx, cy, circR+6, 0, Math.PI*2);
-      uctx.fillStyle='rgba(224,128,32,0.3)';
-      uctx.fill();
+  // Object colours (solid, readable on dark bg)
+  const OBJ_COLORS=[
+    '#4ec9a0','#6ab8e0','#a08ae0','#e09060','#60c060',
+    '#e06060','#60a0e0','#e0c040','#e0a060','#80e0c0','#c080e0','#e08060'
+  ];
+
+  nlHits=[];
+  OBJECTS.forEach((obj,oi)=>{
+    const x=eX(obj.exp);if(x<-80||x>W+80)return;
+    const dist=Math.abs(obj.exp-zoomExp);
+    // Fade when far from centre of view
+    const vis=Math.max(0,1-Math.max(0,dist-WIN*0.6)/(WIN*0.45));
+    if(vis<=0.02)return;
+    const prox=Math.max(0,1-dist/WIN);
+    const r=8+prox*24;
+    const isA=obj===clickedObj,isB=obj===prevClicked,isSel=isA||isB,isHov=obj===hoveredObj;
+    const baseCol=OBJ_COLORS[oi%OBJ_COLORS.length];
+
+    // Glow ring
+    if(isSel||isHov){
+      ctx.beginPath();ctx.arc(x,AXIS_Y,r+8,0,Math.PI*2);
+      ctx.fillStyle=`rgba(192,128,48,${vis*0.28})`;ctx.fill();
     }
 
-    // Circle
-    uctx.beginPath();
-    uctx.arc(cx, cy, circR, 0, Math.PI*2);
-    const circGrad = uctx.createRadialGradient(cx-circR*0.3,cy-circR*0.3,0,cx,cy,circR);
-    if(isSel){
-      circGrad.addColorStop(0,'#ffd080');
-      circGrad.addColorStop(1,'#e08020');
-    } else {
-      circGrad.addColorStop(0,'rgba(180,200,230,0.9)');
-      circGrad.addColorStop(1,'rgba(80,120,180,0.7)');
+    // Solid circle — always high contrast
+    ctx.beginPath();ctx.arc(x,AXIS_Y,r,0,Math.PI*2);
+    if(isA) ctx.fillStyle=`rgba(29,160,140,${vis*0.92})`;
+    else if(isB) ctx.fillStyle=`rgba(200,90,50,${vis*0.92})`;
+    else ctx.fillStyle=baseCol+(Math.round(vis*220).toString(16).padStart(2,'0'));
+    ctx.fill();
+    ctx.strokeStyle=isSel?'#fff':`rgba(255,255,255,${vis*0.3})`;
+    ctx.lineWidth=isSel?2:1;ctx.stroke();
+
+    // Emoji
+    if(r>=10){
+      ctx.font=Math.min(r*1.1,24)+'px serif';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.globalAlpha=vis;ctx.fillText(obj.emoji,x,AXIS_Y);ctx.globalAlpha=1;
     }
-    uctx.fillStyle = circGrad;
-    uctx.fill();
-    uctx.strokeStyle = isSel ? '#ffa040' : 'rgba(255,255,255,0.3)';
-    uctx.lineWidth = isSel ? 2 : 1;
-    uctx.stroke();
 
-    // Icon
-    const iconSize = Math.max(14, Math.min(28, circR * 1.1));
-    uctx.font = `${iconSize}px serif`;
-    uctx.textAlign = 'center';
-    uctx.textBaseline = 'middle';
-    uctx.fillText(item.icon, cx, cy);
+    // Name above circle — always white text on dark bg
+    ctx.globalAlpha=vis;
+    ctx.font=(isSel||isHov?'bold ':'')+`10px DM Sans,sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='bottom';
+    ctx.fillStyle='rgba(255,255,255,.9)';
+    ctx.fillText(obj.name,x,Math.max(AXIS_Y-r-5,12));
+    // Sci notation
+    ctx.font='bold 8px DM Mono,monospace';
+    ctx.fillStyle='rgba(200,160,80,.95)';
+    ctx.fillText(obj.sci,x,Math.max(AXIS_Y-r-16,3));
+    ctx.globalAlpha=1;
 
-    // Exponent label below circle
-    const lblY = cy + circR + 14;
-    uctx.font = `bold 10px DM Mono, monospace`;
-    uctx.textAlign='center';
-    uctx.textBaseline='top';
-    uctx.fillStyle = isSel ? '#ffa040' : 'rgba(255,255,255,0.55)';
-    uctx.fillText('10'+supChar(item.exp), cx, lblY);
-
-    // Name label
-    const nameY = lblY + 14;
-    uctx.font = `${isSel?'bold ':''}9px DM Sans, sans-serif`;
-    uctx.fillStyle = isSel ? '#ffd080' : 'rgba(255,255,255,0.4)';
-    // Wrap long names
-    const words = item.name.split(' ');
-    words.forEach((word, wi) => {
-      uctx.fillText(word, cx, nameY + wi*10);
-    });
-
-    // Axis line
-    uctx.strokeStyle='rgba(255,255,255,0.15)';
-    uctx.lineWidth=1;
-    uctx.beginPath();
-    uctx.moveTo(cellW*i, H*0.85);
-    uctx.lineTo(cellW*i, H*0.9);
-    uctx.stroke();
+    nlHits.push({obj,cx:x,cy:AXIS_Y,r});
   });
 
-  // Horizontal axis
-  uctx.strokeStyle='rgba(255,255,255,0.2)';
-  uctx.lineWidth=1.5;
-  uctx.beginPath();
-  uctx.moveTo(0, H*0.87);
-  uctx.lineTo(W, H*0.87);
-  uctx.stroke();
+  // Axis direction labels
+  ctx.font='10px DM Sans';ctx.fillStyle='rgba(255,255,255,.35)';
+  ctx.textAlign='left';ctx.textBaseline='bottom';ctx.fillText('← smaller',8,H-4);
+  ctx.textAlign='right';ctx.fillText('larger →',W-8,H-4);
 
-  // "Smaller ←" and "→ Bigger" labels
-  uctx.font='bold 10px DM Sans';
-  uctx.fillStyle='rgba(255,255,255,0.35)';
-  uctx.textAlign='left'; uctx.textBaseline='bottom';
-  uctx.fillText('← Smaller (microscopic)', 8, H-6);
-  uctx.textAlign='right';
-  uctx.fillText('Larger (cosmic) →', W-8, H-6);
-
-  updateItemInfo();
-  updateCompareStrip();
+  document.getElementById('zoom-val').textContent='~10'+sup(Math.round(zoomExp))+' m scale';
 }
 
-function updateItemInfo(){
-  if(selectedItems.length === 0){
-    document.getElementById('ii-name').textContent = 'Click any object above';
-    document.getElementById('ii-icon').textContent = '👆';
-    document.getElementById('ii-size').textContent = '';
-    document.getElementById('ii-sci').textContent = '';
-    document.getElementById('ii-compare').textContent = '';
-    return;
+function animZoom(){
+  if(Math.abs(zoomExp-targetZoom)>0.006){
+    zoomExp+=(targetZoom-zoomExp)*0.18;
+    document.getElementById('zoom-sl').value=zoomExp;
+    drawNL();updateNLInfo();requestAnimationFrame(animZoom);
+  } else {
+    zoomExp=targetZoom;document.getElementById('zoom-sl').value=zoomExp;drawNL();updateNLInfo();animating=false;
   }
-  const item = SCALE_ITEMS[selectedItems[selectedItems.length-1]];
-  document.getElementById('ii-icon').textContent = item.icon;
-  document.getElementById('ii-name').textContent = item.name;
-  document.getElementById('ii-size').textContent = item.size;
-  document.getElementById('ii-sci').textContent = item.desc;
-  document.getElementById('ii-compare').textContent =
-    selectedItems.length === 2 ? '' : 'Click another object to compare sizes';
 }
+function setZoom(v){targetZoom=Math.max(-7,Math.min(13,v));if(!animating){animating=true;animZoom();}}
 
-function updateCompareStrip(){
-  const strip = document.getElementById('compare-strip');
-  if(selectedItems.length < 2){
-    strip.classList.remove('visible');
-    return;
-  }
-  const a = SCALE_ITEMS[selectedItems[0]];
-  const b = SCALE_ITEMS[selectedItems[1]];
-  const [small, big] = a.exp <= b.exp ? [a,b] : [b,a];
-  const diff = big.exp - small.exp;
-  strip.classList.add('visible');
-  strip.innerHTML = `
-    <strong>${big.icon} ${big.name}</strong> is <strong>10${supChar(diff)} = ${(Math.pow(10,diff)).toLocaleString('en-IN')}</strong> times bigger than <strong>${small.icon} ${small.name}</strong>.
-    <br>Exponents: ${big.name} = 10${supChar(big.exp)}, ${small.name} = 10${supChar(small.exp)} — subtract: ${big.exp} − ${small.exp} = <strong>${diff}</strong>.
-  `;
-}
+document.getElementById('zoom-sl').addEventListener('input',e=>{zoomExp=+e.target.value;targetZoom=zoomExp;drawNL();updateNLInfo();});
+document.getElementById('zoom-in').addEventListener('click',()=>setZoom(zoomExp-1));
+document.getElementById('zoom-out').addEventListener('click',()=>setZoom(zoomExp+1));
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('view-scale').classList.contains('active'))return;
+  if(e.key==='ArrowLeft')setZoom(zoomExp-1);
+  if(e.key==='ArrowRight')setZoom(zoomExp+1);
+});
 
-uCanvas.addEventListener('click', e => {
-  const rect = uCanvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  for(const hit of hitAreas2){
-    if(mx >= hit.x && mx < hit.x+hit.w){
-      if(selectedItems.includes(hit.i)){
-        selectedItems = selectedItems.filter(x => x !== hit.i);
-      } else {
-        if(selectedItems.length >= 2) selectedItems = [selectedItems[1], hit.i];
-        else selectedItems.push(hit.i);
-      }
-      drawUniverse();
-      return;
+const nlC=document.getElementById('nl-canvas');
+nlC.addEventListener('mousemove',e=>{
+  const r=nlC.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  let found=null;
+  for(const h of nlHits)if(Math.hypot(mx-h.cx,my-h.cy)<=h.r+14){found=h.obj;break;}
+  if(found!==hoveredObj){hoveredObj=found;drawNL();}
+  nlC.style.cursor=found?'pointer':'default';
+});
+nlC.addEventListener('mouseleave',()=>{hoveredObj=null;drawNL();});
+nlC.addEventListener('click',e=>{
+  const r=nlC.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  for(const h of nlHits){
+    if(Math.hypot(mx-h.cx,my-h.cy)<=h.r+14){
+      if(clickedObj===h.obj){clickedObj=null;prevClicked=null;}
+      else{prevClicked=clickedObj;clickedObj=h.obj;}
+      drawNL();updateNLInfo();return;
     }
   }
 });
 
-new ResizeObserver(() => {
-  if(document.getElementById('view-scale').classList.contains('active')) drawUniverse();
-}).observe(uCanvas.parentElement);
+function updateNLInfo(){
+  const obj=hoveredObj||clickedObj;
+  if(!obj){document.getElementById('nl-emoji').textContent='👆';document.getElementById('nl-name').textContent='Drag the slider or click an object';document.getElementById('nl-sci').textContent='';document.getElementById('nl-detail').textContent='Use arrow keys or buttons to zoom';document.getElementById('cmp-bar').classList.remove('show');return;}
+  document.getElementById('nl-emoji').textContent=obj.emoji;
+  document.getElementById('nl-name').textContent=obj.name;
+  document.getElementById('nl-sci').textContent=obj.sci;
+  document.getElementById('nl-detail').textContent=obj.detail;
+  if(clickedObj&&prevClicked&&clickedObj!==prevClicked){
+    const big=clickedObj.exp>=prevClicked.exp?clickedObj:prevClicked;
+    const small=clickedObj.exp>=prevClicked.exp?prevClicked:clickedObj;
+    const diff=big.exp-small.exp;
+    document.getElementById('cmp-bar').classList.add('show');
+    document.getElementById('cmp-big').textContent=big.emoji+' '+big.name+' is 10'+sup(diff)+' times bigger than '+small.emoji+' '+small.name;
+    document.getElementById('cmp-sub').innerHTML=big.sci+' ÷ '+small.sci+' → exponent difference = <strong>'+diff+'</strong>';
+  } else document.getElementById('cmp-bar').classList.remove('show');
+}
+new ResizeObserver(()=>{if(document.getElementById('view-scale').classList.contains('active'))drawNL();}).observe(nlC.parentElement);
+
+// DRAG TAB
+let sigDigits=[],origExp=0,shift=0,solved=false;
+function loadNum(s){
+  const n=parseFloat(s);
+  const es=Math.abs(n).toExponential(7).replace(/\.?0+e/,'e');
+  const[cp,ep]=es.split('e');
+  origExp=parseInt(ep);shift=0;solved=false;
+  sigDigits=cp.replace('.','').replace(/0+$/,'').split('');
+  if(!sigDigits.length)sigDigits=['0'];
+  document.getElementById('success-card').classList.remove('show');
+  renderTiles();
+}
+function renderTiles(){
+  const row=document.getElementById('tile-row');row.innerHTML='';
+  const dbc=1+shift,lP=Math.max(0,1-dbc),rP=Math.max(0,dbc-sigDigits.length);
+  const all=[...Array(lP).fill('0'),...sigDigits,...Array(Math.min(rP,10)).fill('0')];
+  const dot=lP+Math.max(1,dbc);
+  const disp=all.slice(0,Math.min(all.length,13));
+  disp.forEach((d,i)=>{
+    if(i===dot){const pin=document.createElement('div');pin.className='decimal-pin';pin.innerHTML='<div class="dp-dot"></div>';row.appendChild(pin);}
+    const t=document.createElement('div');t.className='dtile';
+    const dist=Math.abs(i-dot+0.5);
+    t.classList.add(dist<=2?'bright':dist<=4?'mid':'dim');
+    t.textContent=d;row.appendChild(t);
+  });
+  if(dot>=disp.length){const pin=document.createElement('div');pin.className='decimal-pin';pin.innerHTML='<div class="dp-dot"></div>';row.appendChild(pin);}
+  updateReadout();
+}
+function updateReadout(){
+  const curExp=origExp+shift,dbc=1+shift,lP=Math.max(0,1-dbc);
+  const all=[...Array(lP).fill('0'),...sigDigits];
+  const bD=all.slice(0,Math.max(1,dbc+lP)).join('')||'0';
+  const aD=all.slice(Math.max(1,dbc+lP)).join('').replace(/0+$/,'');
+  const coeff=aD?bD+'.'+aD:bD;
+  const fd=parseInt(bD);
+  const ok=bD.length===1&&fd>=1&&fd<=9;
+  document.getElementById('sr-coeff').textContent=coeff;
+  document.getElementById('sr-coeff').className='sr-coeff'+(ok?' ok':'');
+  document.getElementById('sr-exp').textContent=sup(curExp);
+  document.getElementById('sr-exp').className='sr-exp'+(ok?' ok':'');
+  const sb=document.getElementById('drag-status');sb.innerHTML='';
+  const p1=document.createElement('div');
+  if(ok){p1.className='ds-pill ds-good';p1.textContent='OK: '+coeff+' x 10'+sup(curExp);}
+  else if(bD.length>1){p1.className='ds-pill ds-warn';p1.textContent=bD.length+' digits before decimal -- drag left';}
+  else if(bD==='0'){p1.className='ds-pill ds-warn';p1.textContent='0 before decimal -- drag right';}
+  else{p1.className='ds-pill ds-idle';p1.textContent='drag left or right';}
+  sb.appendChild(p1);
+  if(shift!==0){const p2=document.createElement('div');p2.className='ds-pill ds-idle';p2.textContent=shift>0?'moved '+shift+' left -- exp +'+shift:'moved '+Math.abs(shift)+' right -- exp '+shift;sb.appendChild(p2);}
+  if(ok&&!solved){solved=true;celebrate(coeff,curExp);}
+}
+function celebrate(coeff,exp){
+  const stage=document.getElementById('dragger-stage');
+  ['🎉','✨','⭐','🌟'].forEach((em,i)=>{
+    const el=document.createElement('div');el.className='conf';el.textContent=em;
+    el.style.cssText='left:'+(15+i*22)+'%;top:'+(8+i%2*25)+'%;animation-delay:'+(i*0.1)+'s';
+    stage.appendChild(el);setTimeout(()=>el.remove(),900);
+  });
+  document.getElementById('success-card').classList.add('show');
+  document.getElementById('sc-eq').textContent=coeff+' x 10'+sup(exp);
+  document.getElementById('sc-explain').innerHTML='The decimal moved <strong>'+Math.abs(shift)+'</strong> place'+(Math.abs(shift)!==1?'s':'')+' '+(shift>0?'left (bigger)':'right (smaller)')+' -- so exponent = <strong>'+exp+'</strong>.';
+}
+let dA=false,dSX=0,dSS=0;
+const stg=document.getElementById('dragger-stage');
+stg.addEventListener('pointerdown',e=>{dA=true;dSX=e.clientX;dSS=shift;stg.setPointerCapture(e.pointerId);});
+stg.addEventListener('pointermove',e=>{if(!dA)return;const dx=e.clientX-dSX;const ns=Math.max(-8,Math.min(15,dSS+Math.round(dx/48)*-1));if(ns!==shift){shift=ns;if(solved)solved=false;renderTiles();}});
+stg.addEventListener('pointerup',()=>{dA=false;});
+document.querySelectorAll('.psc').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.psc').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('cp-num').textContent=btn.dataset.label;
+    loadNum(btn.dataset.num);
+  });
+});
+drawNL();loadNum('5900');
 </script>
 </body>
 </html>
