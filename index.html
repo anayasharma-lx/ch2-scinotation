@@ -5,396 +5,596 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Scientific Notation — Ganita Prakash Grade 8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --paper:#faf8f4;--paper2:#f3f0ea;--paper3:#e8e3d8;--ink:#1c1a16;--ink2:#4a4640;--ink3:#8a8580;--rule:#d4cfc5;
-  --teal:#1d6a72;--teal2:#2a8a94;--teal-bg:#e8f4f5;--rust:#b84a2a;--rust-bg:#fdf0ec;--gold:#c08030;--gold-bg:#fdf5e8;--sage:#3a6a48;--sage-bg:#eaf2ec;
-  --font:'DM Sans',sans-serif;--serif:'Lora',Georgia,serif;--mono:'DM Mono',ui-monospace,monospace;--shadow:0 2px 12px rgba(28,26,22,.08);
+  --ice:#f4f8fc;
+  --ice2:#eaf2f9;
+  --ice3:#deeaf5;
+  --ice4:#c8dced;
+  --steel:#4a6a88;
+  --steel2:#2a4a68;
+  --steel3:#1a3050;
+  --navy:#0a1828;
+  --dim:#8aaccc;
+  --dimmer:#c0d4e8;
+  --blue:#1468c0;
+  --blue2:#3888e0;
+  --blue-glow:rgba(20,104,192,.15);
+  --green:#0a8a50;
+  --green-bg:rgba(10,138,80,.1);
+  --amber:#c47a0a;
+  --amber-bg:rgba(196,122,10,.1);
+  --red:#d02020;
+  --border:#c8dcea;
+  --sans:'Syne',system-ui,sans-serif;
+  --mono:'DM Mono',ui-monospace,monospace;
 }
-body{font-family:var(--font);background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;padding:28px 20px 60px;line-height:1.6;background-image:radial-gradient(circle at 20% 30%,rgba(192,128,48,.04) 0,transparent 50%),radial-gradient(circle at 80% 70%,rgba(29,106,114,.04) 0,transparent 50%)}
-.app{max-width:940px;margin:0 auto}
-.header{margin-bottom:22px;padding-bottom:18px;border-bottom:1.5px solid var(--rule)}
-.chapter-badge{display:inline-flex;align-items:center;gap:8px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:20px;padding:4px 14px 4px 10px;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
-.badge-num{width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center}
-h1{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.3px;line-height:1.2;margin-bottom:5px}
-.header-sub{font-size:14px;color:var(--ink2);max-width:560px;line-height:1.55}
-.card{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
-.tabs{display:flex;gap:3px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:12px;padding:4px;margin-bottom:22px}
-.tab{flex:1;padding:10px;border:none;background:transparent;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .18s;text-align:center}
-.tab:hover{color:var(--ink2)}
-.tab.active{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(28,26,22,.10);border:1.5px solid var(--rule)}
-.view{display:none}.view.active{display:block}
-.concept{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:20px;font-family:var(--serif);font-style:italic;font-size:14px;color:#4a3010;line-height:1.65}
-.concept strong{font-style:normal;font-weight:700;color:#3a2008}
-.insight{background:var(--gold-bg);border:1px solid #e0c080;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 15px;font-size:13px;color:#6b4400;line-height:1.65;margin-top:16px}
-.insight strong{color:#4a2e00}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  font-family:var(--sans);
+  background:var(--ice);
+  color:var(--navy);
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;
+  position:fixed;inset:0;
+}
 
-/* SCALE TAB */
-.zoom-strip{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.zoom-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);white-space:nowrap}
-.zoom-slider{flex:1;min-width:120px;accent-color:var(--teal);height:5px;cursor:pointer}
-.zoom-val{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--teal);white-space:nowrap;min-width:100px}
-.zoom-btns{display:flex;gap:5px}
-.zoom-btn{padding:5px 12px;border:1.5px solid var(--rule);border-radius:7px;background:var(--paper);font-family:var(--font);font-size:12px;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .12s}
-.zoom-btn:hover{border-color:var(--teal);color:var(--teal)}
-.nl-wrap{position:relative;border-radius:12px;overflow:hidden;margin-bottom:14px;cursor:default;border:1.5px solid var(--rule)}
-#nl-canvas{display:block;width:100%}
-.nl-info{min-height:72px;padding:12px 16px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:10px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
-.nl-emoji{font-size:32px;flex-shrink:0;line-height:1;margin-top:2px}
-.nl-text strong{font-size:14px;font-weight:700;color:var(--ink);display:block;margin-bottom:1px}
-.nl-text .nl-sci{font-family:var(--mono);font-size:12px;color:var(--teal);font-weight:700}
-.nl-text .nl-detail{font-size:12px;color:var(--ink3)}
-.cmp-bar{padding:12px 16px;background:#fff;border:2px solid var(--teal);border-radius:10px;display:none;text-align:center}
-.cmp-bar.show{display:block}
-.cmp-big{font-family:var(--mono);font-size:18px;font-weight:800;color:var(--teal)}
-.cmp-sub{font-size:12px;color:var(--ink2);margin-top:3px}
+/* ── HEADER ── */
+.top{
+  border-bottom:1px solid var(--border);
+  background:var(--ice2);
+  display:flex;align-items:stretch;
+  flex-shrink:0;
+  height:46px;
+}
+.top-left{
+  padding:0 18px;border-right:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;min-width:200px;
+}
+.top-ch{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);font-family:var(--mono);}
+.top-title{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.top-tabs{display:flex;align-items:center;gap:0;padding:0 18px;flex:1;border-right:1px solid var(--border)}
+.ttab{
+  height:46px;padding:0 18px;
+  border:none;background:transparent;
+  font-family:var(--sans);font-size:13px;font-weight:600;
+  color:var(--dim);cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all .15s;letter-spacing:.01em;
+  position:relative;top:0;
+}
+.ttab:hover{color:var(--steel2)}
+.ttab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.top-right{
+  padding:0 16px;display:flex;align-items:center;gap:8px;
+}
+.tr-lbl{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-family:var(--mono);}
+.tr-val{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--steel2)}
 
-/* DRAG TAB */
-.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
-.preset-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);white-space:nowrap}
-.psc{padding:5px 13px;border:1.5px solid var(--rule);border-radius:20px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink2);cursor:pointer;background:var(--paper);transition:all .12s}
-.psc:hover{border-color:var(--teal);color:var(--teal)}
-.psc.active{background:var(--teal);border-color:var(--teal);color:#fff}
-.challenge-prompt{background:var(--paper2);border:1.5px solid var(--rule);border-radius:10px;padding:13px 16px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.cp-num{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--ink)}
-.cp-target{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--teal)}
-.cp-hint{font-size:11px;color:var(--ink3)}
-.dragger-stage{background:#111a22;border-radius:14px;padding:24px 16px 20px;margin-bottom:14px;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;overflow:hidden;user-select:none;min-height:180px;cursor:ew-resize}
-.dragger-stage::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(29,106,114,.2),transparent 55%);pointer-events:none}
-.tile-row{display:flex;align-items:center;gap:4px}
-.dtile{width:44px;height:62px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:26px;font-weight:800;border-radius:8px;border:1.5px solid;flex-shrink:0;transition:all .15s}
-.dtile.bright{background:#0d2040;border-color:var(--teal);color:#e8f8ff}
-.dtile.mid{background:#0a1828;border-color:#2a4060;color:#7aA0c0}
-.dtile.dim{background:#060d14;border-color:#141e28;color:#1e2e40}
-.decimal-pin{width:16px;height:62px;display:flex;align-items:center;justify-content:center;flex-shrink:0;pointer-events:none}
-.dp-dot{width:11px;height:11px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px rgba(192,128,48,.9)}
-.sci-readout{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.25);border-radius:10px;padding:10px 16px;width:100%;border:1.5px solid #1a2a3a}
-.sr-coeff{font-family:var(--mono);font-size:28px;font-weight:800;color:#c8e0f8;transition:color .2s;letter-spacing:-.5px}
-.sr-coeff.ok{color:#5abe8a}
-.sr-x{font-size:20px;color:#2a4a6a;font-weight:700}
-.sr-base{display:flex;align-items:flex-start}
-.sr-ten{font-family:var(--mono);font-size:20px;font-weight:800;color:#5a88c0}
-.sr-exp{font-family:var(--mono);font-size:20px;font-weight:800;color:var(--gold);transition:color .2s}
-.sr-exp.ok{color:#5abe8a}
-.drag-status{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center}
-.ds-pill{padding:4px 11px;border-radius:20px;font-family:var(--mono);font-size:11px;font-weight:700;border:1.5px solid}
-.ds-idle{background:#0a1828;border-color:#1a3050;color:#4a6a90}
-.ds-good{background:#081a10;border-color:#1a6a30;color:#5abe8a}
-.ds-warn{background:#1a0800;border-color:#6a3000;color:#d08020}
-@keyframes confPop{0%{transform:scale(0);opacity:1}100%{transform:scale(2);opacity:0}}
-.conf{position:absolute;pointer-events:none;font-size:24px;animation:confPop .7s ease forwards}
-.success-card{background:var(--sage-bg);border:2px solid var(--sage);border-radius:12px;padding:14px 18px;text-align:center;display:none;margin-top:2px}
-.success-card.show{display:block}
-.sc-title{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--sage);margin-bottom:5px}
-.sc-eq{font-family:var(--mono);font-size:20px;font-weight:800;color:var(--teal);margin-bottom:5px}
-.sc-explain{font-size:12px;color:#2a4a30;line-height:1.6}
-.rule-box{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 9px 9px 0;padding:12px 15px;font-size:13px;color:#6b4400;line-height:1.65}
-.rule-box strong{color:#4a2e00}
-.rule-box code{font-family:var(--mono);font-weight:700;background:rgba(192,128,48,.15);padding:1px 5px;border-radius:4px}
+/* ── MAIN VIEWS ── */
+.view{display:none;flex:1;overflow:hidden}
+.view.active{display:flex}
+
+/* ═══════════════════════════════════════
+   VIEW 1: ZOOM THE NUMBER LINE
+════════════════════════════════════════ */
+#view-zoom{flex-direction:column}
+
+.zoom-controls{
+  display:flex;align-items:center;gap:14px;
+  padding:10px 20px;
+  border-bottom:1px solid var(--border);
+  background:var(--ice2);
+  flex-shrink:0;
+}
+.zc-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+input.zoom-sl{
+  flex:1;height:3px;
+  -webkit-appearance:none;
+  background:var(--ice3);border-radius:2px;outline:none;cursor:pointer;
+}
+input.zoom-sl::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--blue);box-shadow:0 0 12px var(--blue-glow);cursor:pointer;
+}
+.zoom-val{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);white-space:nowrap;min-width:90px}
+.zoom-nav{display:flex;gap:5px}
+.znav-btn{
+  padding:5px 12px;border:1px solid var(--border);
+  background:transparent;border-radius:3px;
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  color:var(--steel);cursor:pointer;transition:all .12s;
+}
+.znav-btn:hover{border-color:var(--blue);color:var(--blue)}
+
+.nl-canvas-wrap{position:relative;overflow:hidden;flex:0 0 220px}
+#nl-cvs{display:block;width:100%}
+
+.nl-bottom{
+  flex:1;display:grid;grid-template-columns:1fr 320px;
+  border-top:1px solid var(--border);
+  overflow:hidden;min-height:0;
+}
+.nl-info{
+  padding:16px 20px;
+  display:flex;flex-direction:column;gap:8px;
+  overflow-y:auto;
+}
+.nli-emoji{font-size:36px;line-height:1}
+.nli-name{font-size:20px;font-weight:700;color:var(--navy);letter-spacing:-.02em}
+.nli-sci{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--blue);margin-top:2px}
+.nli-detail{font-size:12px;color:var(--steel);line-height:1.65;font-family:var(--mono)}
+.nli-empty{font-size:14px;color:var(--dim);font-family:var(--mono);align-self:flex-start}
+
+.nl-cmp{
+  border-left:1px solid var(--border);
+  padding:16px;
+  background:var(--ice2);
+  overflow-y:auto;
+}
+.cmp-empty{font-size:12px;color:var(--dim);font-family:var(--mono);font-style:italic}
+.cmp-header{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-family:var(--mono);margin-bottom:10px}
+.cmp-big{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--blue);display:block;margin:8px 0}
+.cmp-text{font-family:var(--mono);font-size:11px;color:var(--steel);line-height:1.7}
+
+/* ═══════════════════════════════════════
+   VIEW 2: DRAG TO FIND NOTATION
+════════════════════════════════════════ */
+#view-drag{flex-direction:column}
+
+.drag-top{
+  padding:12px 20px;border-bottom:1px solid var(--border);
+  background:var(--ice2);flex-shrink:0;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.preset-lbl{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-family:var(--mono);}
+.preset-pills{display:flex;gap:5px;flex-wrap:wrap}
+.preset{
+  padding:5px 12px;border:1px solid var(--border);border-radius:3px;
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  color:var(--steel);background:transparent;cursor:pointer;transition:all .12s;
+}
+.preset:hover{border-color:var(--blue);color:var(--blue)}
+.preset.active{background:var(--blue);border-color:var(--blue);color:#fff}
+
+.drag-main{flex:1;display:grid;grid-template-columns:1fr 300px;overflow:hidden;min-height:0}
+
+.drag-left{
+  display:flex;flex-direction:column;
+  padding:20px;overflow-y:auto;
+}
+.challenge-row{
+  display:flex;align-items:baseline;gap:16px;
+  margin-bottom:20px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border);
+}
+.ch-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-family:var(--mono);}
+.ch-num{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--navy)}
+
+/* draggable stage */
+.stage{
+  background:var(--navy);
+  border-radius:4px;
+  padding:20px 16px 18px;
+  display:flex;flex-direction:column;
+  align-items:center;gap:14px;
+  position:relative;overflow:hidden;
+  cursor:ew-resize;
+  user-select:none;
+  flex-shrink:0;
+}
+.stage::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(20,104,192,.3),transparent 60%);
+  pointer-events:none;
+}
+
+/* tiles */
+.tile-row{display:flex;align-items:center;gap:3px}
+.tile{
+  width:42px;height:60px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:26px;font-weight:700;
+  border-radius:3px;border:1px solid;
+  flex-shrink:0;transition:all .18s;
+}
+.tile-bright{background:#0e2240;border-color:var(--blue2);color:#c8e4ff}
+.tile-mid{background:#091828;border-color:#1a3050;color:#5a80a0}
+.tile-dim{background:#050c14;border-color:#0d1828;color:#182430}
+.dec-pin{
+  width:14px;height:60px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.dec-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--amber);box-shadow:0 0 14px var(--amber);
+}
+
+/* readout */
+.readout{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  justify-content:center;
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(20,104,192,.3);
+  border-radius:3px;padding:10px 16px;width:100%;
+}
+.ro-coeff{font-family:var(--mono);font-size:28px;font-weight:700;color:#a0c4e8;transition:color .2s}
+.ro-coeff.ok{color:#3ae890}
+.ro-x{font-size:18px;color:rgba(160,196,232,.4);font-family:var(--mono)}
+.ro-ten{font-family:var(--mono);font-size:20px;font-weight:700;color:#4a80b0}
+.ro-exp{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--amber);transition:color .2s}
+.ro-exp.ok{color:#3ae890}
+
+/* status */
+.drag-status{font-family:var(--mono);font-size:11px;color:rgba(160,196,232,.6);text-align:center}
+.drag-status.ok{color:#3ae890}
+.drag-status.warn{color:var(--amber)}
+
+/* success */
+.success{
+  display:none;
+  margin-top:14px;
+  padding:12px 16px;
+  background:var(--green-bg);
+  border:1px solid rgba(10,138,80,.4);
+  border-radius:3px;text-align:center;
+}
+.success.show{display:block}
+.success-title{font-size:13px;font-weight:700;color:var(--green);margin-bottom:4px}
+.success-eq{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.success-explain{font-family:var(--mono);font-size:11px;color:var(--steel);line-height:1.6}
+
+/* drag right panel */
+.drag-right{
+  border-left:1px solid var(--border);
+  padding:16px;background:var(--ice2);
+  overflow-y:auto;
+}
+.drp-lbl{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-family:var(--mono);margin-bottom:10px}
+.rule-item{
+  display:flex;gap:10px;
+  padding:8px 0;
+  border-bottom:1px solid var(--border);
+  font-family:var(--mono);font-size:11px;
+  color:var(--steel);line-height:1.55;
+}
+.rule-item:last-child{border-bottom:none}
+.rule-arrow{color:var(--blue);font-weight:700;flex-shrink:0;min-width:20px}
+.rule-item strong{color:var(--navy)}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="header">
-    <div class="chapter-badge"><div class="badge-num">2</div>Chapter 2 · Power Play</div>
-    <h1>Scientific Notation</h1>
-    <p class="header-sub">Why write 1.5 × 10¹¹ instead of 150,000,000,000? The exponent carries the meaning — and makes comparison effortless.</p>
+
+<!-- HEADER -->
+<div class="top">
+  <div class="top-left">
+    <div class="top-ch">Ch·02</div>
+    <div class="top-title">Scientific Notation</div>
   </div>
-  <div class="card">
-    <div class="tabs">
-      <button class="tab active" data-tab="scale">Zoom the number line</button>
-      <button class="tab" data-tab="drag">Find the scientific notation</button>
-    </div>
+  <div class="top-tabs">
+    <button class="ttab active" data-v="zoom">Zoom the number line</button>
+    <button class="ttab" data-v="drag">Find the notation</button>
+  </div>
+  <div class="top-right">
+    <span class="tr-lbl">scale</span>
+    <span class="tr-val" id="tr-val">~10⁰ m</span>
+  </div>
+</div>
 
-    <div class="view active" id="view-scale">
-      <div class="concept"><strong>Zoom in and out of the scale of the universe.</strong> Each slider step moves one power of 10 — objects appear and disappear as you pass their scale. Click two objects to see how many times bigger one is.</div>
-      <div class="zoom-strip">
-        <span class="zoom-label">Zoom</span>
-        <input type="range" class="zoom-slider" id="zoom-sl" min="-7" max="13" step="0.04" value="0">
-        <span class="zoom-val" id="zoom-val">~10⁰ m scale</span>
-        <div class="zoom-btns">
-          <button class="zoom-btn" id="zoom-in">← smaller</button>
-          <button class="zoom-btn" id="zoom-out">larger →</button>
-        </div>
-      </div>
-      <div class="nl-wrap"><canvas id="nl-canvas" height="260"></canvas></div>
-      <div class="nl-info" id="nl-info">
-        <div class="nl-emoji" id="nl-emoji">👆</div>
-        <div class="nl-text">
-          <strong id="nl-name">Drag the slider or click an object</strong>
-          <div class="nl-sci" id="nl-sci"></div>
-          <div class="nl-detail" id="nl-detail">Use arrow keys or buttons. Objects appear when you zoom to their scale.</div>
-        </div>
-      </div>
-      <div class="cmp-bar" id="cmp-bar"><div class="cmp-big" id="cmp-big"></div><div class="cmp-sub" id="cmp-sub"></div></div>
-      <div class="insight"><strong>The zoom trick:</strong> zooming from 10⁰ (person) to 10¹¹ (Earth-Sun) takes 11 full steps — that gap is 100,000,000,000 times. Scientific notation makes it just a subtraction: 11 − 0 = 11. The exponent IS the number of steps.</div>
+<!-- VIEW 1: ZOOM -->
+<div class="view active" id="view-zoom">
+  <div class="zoom-controls">
+    <span class="zc-label">Zoom</span>
+    <input type="range" class="zoom-sl" id="zoom-sl" min="-7" max="13" step="0.05" value="0">
+    <span class="zoom-val" id="zoom-vl">~10⁰ m</span>
+    <div class="zoom-nav">
+      <button class="znav-btn" id="zn-sm">← smaller</button>
+      <button class="znav-btn" id="zn-lg">larger →</button>
     </div>
-
-    <div class="view" id="view-drag">
-      <div class="concept"><strong>Drag the digits until one sits before the decimal.</strong> The gold dot is the decimal point — it stays fixed. Slide the number left or right until exactly one non-zero digit is before the gold dot. Then the exponent lights up green.</div>
-      <div class="preset-row">
-        <span class="preset-lbl">Pick:</span>
-        <button class="psc active" data-num="5900" data-label="5,900">5,900</button>
-        <button class="psc" data-num="34300000" data-label="3,43,00,000">3,43,00,000</button>
-        <button class="psc" data-num="149600000000" data-label="Earth–Sun (m)">Earth–Sun</button>
-        <button class="psc" data-num="0.000012" data-label="0.000012">0.000012</button>
-        <button class="psc" data-num="602200000000000000000000" data-label="Avogadro">Avogadro</button>
-      </div>
-      <div class="challenge-prompt">
-        <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);margin-bottom:3px">Write in scientific notation</div><div class="cp-num" id="cp-num">5,900</div></div>
-        <div style="font-size:20px;color:var(--ink3)">→</div>
-        <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);margin-bottom:3px">Target form</div><div class="cp-target">d.ddd × 10ⁿ</div><div class="cp-hint">d must be 1–9</div></div>
-      </div>
-      <div class="dragger-stage" id="dragger-stage">
-        <div class="tile-row" id="tile-row"></div>
-        <div class="sci-readout"><div class="sr-coeff" id="sr-coeff">5900</div><div class="sr-x">×</div><div class="sr-base"><div class="sr-ten">10</div><div class="sr-exp" id="sr-exp">⁰</div></div></div>
-        <div class="drag-status" id="drag-status"></div>
-      </div>
-      <div class="success-card" id="success-card"><div class="sc-title">Found it! ✓</div><div class="sc-eq" id="sc-eq"></div><div class="sc-explain" id="sc-explain"></div></div>
-      <div class="rule-box"><strong>The rule:</strong> slide left → decimal moves right past digits → exponent goes up by 1 each step. Slide right → exponent goes down. Stop at <code>d.dd × 10ⁿ</code>.</div>
+  </div>
+  <div class="nl-canvas-wrap">
+    <canvas id="nl-cvs" height="220"></canvas>
+  </div>
+  <div class="nl-bottom">
+    <div class="nl-info" id="nl-info">
+      <div class="nli-empty">Drag the slider or click an object on the line</div>
+    </div>
+    <div class="nl-cmp" id="nl-cmp">
+      <div class="cmp-header">Comparison</div>
+      <div class="cmp-empty">Click two objects to compare their scales</div>
     </div>
   </div>
 </div>
+
+<!-- VIEW 2: DRAG -->
+<div class="view" id="view-drag">
+  <div class="drag-top">
+    <span class="preset-lbl">Number</span>
+    <div class="preset-pills">
+      <button class="preset active" data-num="5900" data-lbl="5,900">5,900</button>
+      <button class="preset" data-num="34300000" data-lbl="3,43,00,000">3,43,00,000</button>
+      <button class="preset" data-num="149600000000" data-lbl="Earth–Sun (m)">Earth–Sun</button>
+      <button class="preset" data-num="0.000012" data-lbl="0.000012">0.000012</button>
+      <button class="preset" data-num="602200000000000000000000" data-lbl="Avogadro">Avogadro</button>
+    </div>
+  </div>
+  <div class="drag-main">
+    <div class="drag-left">
+      <div class="challenge-row">
+        <div>
+          <div class="ch-label">Write in scientific notation</div>
+          <div class="ch-num" id="ch-num">5,900</div>
+        </div>
+        <div>→</div>
+        <div>
+          <div class="ch-label">Goal</div>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--dim)">d.ddd × 10ⁿ<br><span style="font-size:10px">where d is 1–9</span></div>
+        </div>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="tile-row" id="tile-row"></div>
+        <div class="readout">
+          <span class="ro-coeff" id="ro-coeff">5900</span>
+          <span class="ro-x">×</span>
+          <span class="ro-ten">10</span><span class="ro-exp" id="ro-exp">⁰</span>
+        </div>
+        <div class="drag-status" id="drag-st">← drag left or right →</div>
+      </div>
+
+      <div class="success" id="success">
+        <div class="success-title">Found it! ✓</div>
+        <div class="success-eq" id="suc-eq"></div>
+        <div class="success-explain" id="suc-exp"></div>
+      </div>
+    </div>
+
+    <div class="drag-right">
+      <div class="drp-lbl">The rules</div>
+      <div class="rule-item"><span class="rule-arrow">←</span><div>Drag <strong>left</strong>: decimal moves right past digits. Each step <strong>adds 1 to exponent</strong>.</div></div>
+      <div class="rule-item"><span class="rule-arrow">→</span><div>Drag <strong>right</strong>: decimal moves left. Each step <strong>subtracts 1 from exponent</strong>.</div></div>
+      <div class="rule-item"><span class="rule-arrow">✓</span><div>Stop when <strong>exactly one non-zero digit</strong> is left of the gold dot.</div></div>
+      <div class="rule-item"><span class="rule-arrow">n</span><div>The exponent equals <strong>how many places</strong> you moved the decimal.</div></div>
+      <div style="margin-top:14px;padding:10px;background:var(--amber-bg);border:1px solid rgba(196,122,10,.3);border-radius:3px;font-family:var(--mono);font-size:11px;color:var(--steel);line-height:1.6">
+        <strong style="color:var(--amber)">Example:</strong> 5,900 → slide left 3 places → 5.9 × 10³<br>
+        The gold dot started after the 5900, moved 3 positions left.
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 function sup(n){return String(n).split('').map(c=>({'−':'⁻','-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}[c]||c)).join('')}
-const PR=Math.min(window.devicePixelRatio||1,2);
 
-document.querySelectorAll('.tab').forEach(tab=>{
+// ── TABS ─────────────────────────────────────────────
+document.querySelectorAll('.ttab').forEach(tab=>{
   tab.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.ttab').forEach(t=>t.classList.remove('active'));
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     tab.classList.add('active');
-    document.getElementById('view-'+tab.dataset.tab).classList.add('active');
-    if(tab.dataset.tab==='scale')drawNL();
+    document.getElementById('view-'+tab.dataset.v).classList.add('active');
+    if(tab.dataset.v==='zoom')drawNL();
   });
 });
 
-// SCALE TAB
+// ════════════════════════════════════════════════════
+// VIEW 1: ZOOM NUMBER LINE
+// ════════════════════════════════════════════════════
 const OBJECTS=[
-  {exp:-7,emoji:'🦠',name:'Virus',sci:'~10⁻⁷ m',detail:'100 nm. 800 viruses fit across one hair.'},
-  {exp:-5,emoji:'🧫',name:'Blood cell',sci:'~10⁻⁵ m',detail:'8 µm. A drop of blood has 5 million.'},
-  {exp:-3,emoji:'🐜',name:'Ant',sci:'~10⁻³ m',detail:'1–2 mm. Ants can lift 50× their weight.'},
-  {exp:-1,emoji:'🤚',name:'Your hand',sci:'~10⁻¹ m',detail:'About 18 cm — almost 10⁰ = 1 m scale.'},
-  {exp:0, emoji:'🧍',name:'Person',sci:'~10⁰ m',detail:'~1.7 m. Our reference point — 10⁰ = 1.'},
-  {exp:2, emoji:'⚽',name:'Football field',sci:'~10² m',detail:'100 m long. 100 people end to end.'},
-  {exp:4, emoji:'⛰️',name:'Everest',sci:'~10⁴ m',detail:'8,849 m. Light travels this in 0.00003 s.'},
-  {exp:6, emoji:'🌏',name:'India width',sci:'~3×10⁶ m',detail:'~3,000 km. 3 hours by plane.'},
-  {exp:7, emoji:'🌍',name:'Earth diameter',sci:'~10⁷ m',detail:'12,742 km. Light circles it 7.5×/sec.'},
-  {exp:8, emoji:'🌙',name:'Earth to Moon',sci:'~4×10⁸ m',detail:'384,400 km. Apollo took 3 days.'},
-  {exp:11,emoji:'☀️',name:'Earth to Sun',sci:'1.5×10¹¹ m',detail:'150M km. Light takes 8 min 20 sec.'},
-  {exp:13,emoji:'🌌',name:'Solar system',sci:'~10¹³ m',detail:'Oort Cloud extends ~10¹³ m from Sun.'},
+  {exp:-7,emoji:'🦠',name:'Virus',sci:'~10⁻⁷ m',detail:'About 100 nm. 800 viruses fit across a single strand of hair.'},
+  {exp:-5,emoji:'🧫',name:'Blood cell',sci:'~10⁻⁵ m',detail:'About 8 µm. One drop of blood contains roughly 5 million of these.'},
+  {exp:-3,emoji:'🐜',name:'Ant',sci:'~10⁻³ m',detail:'1–2 mm long. Ants can lift 50× their own body weight.'},
+  {exp:0, emoji:'🧍',name:'Person',sci:'~10⁰ m',detail:'About 1.7 m tall. Our reference: 10⁰ = 1 metre scale.'},
+  {exp:2, emoji:'⚽',name:'Football field',sci:'~10² m',detail:'100 m long. About 100 people standing head to toe.'},
+  {exp:4, emoji:'⛰️',name:'Mt Everest',sci:'~10⁴ m',detail:'8,849 m. Light travels this distance in just 0.00003 seconds.'},
+  {exp:6, emoji:'🌏',name:'India width',sci:'~3×10⁶ m',detail:'About 3,000 km east to west. A 3-hour flight covers it.'},
+  {exp:7, emoji:'🌍',name:'Earth diameter',sci:'~10⁷ m',detail:'12,742 km. Light can circle the Earth 7.5 times per second.'},
+  {exp:8, emoji:'🌙',name:'Earth–Moon',sci:'~4×10⁸ m',detail:'384,400 km. Apollo astronauts took about 3 days to travel here.'},
+  {exp:11,emoji:'☀️',name:'Earth–Sun',sci:'1.5×10¹¹ m',detail:'150 million km. Light takes exactly 8 minutes 20 seconds.'},
+  {exp:13,emoji:'🪐',name:'Solar system',sci:'~10¹³ m',detail:"The Oort Cloud extends roughly 10¹³ m from the Sun."},
 ];
 
-let zoomExp=0,hoveredObj=null,clickedObj=null,prevClicked=null,nlHits=[],animating=false,targetZoom=0;
+const OBJ_COLS=[
+  '#4ab0e0','#60c890','#e09060','#4060d0',
+  '#d05050','#80a020','#c060a0','#3090b0',
+  '#d0a030','#4080d0','#a040d0'
+];
+
+let zoomExp=0,targetZoom=0,animating=false;
+let hovObj=null,clickA=null,clickB=null,nlHits=[];
+const nlCvs=document.getElementById('nl-cvs');
+const nlCtx=nlCvs.getContext('2d');
+const PR=Math.min(window.devicePixelRatio||1,2);
 
 function drawNL(){
-  const canvas=document.getElementById('nl-canvas');
-  const W=canvas.parentElement.clientWidth;
-  const H=260;
-  canvas.style.width=W+'px';canvas.style.height=H+'px';
-  canvas.width=W*PR;canvas.height=H*PR;
-  const ctx=canvas.getContext('2d');
-  ctx.resetTransform();ctx.scale(PR,PR);
+  const wrap=nlCvs.parentElement;
+  const W=wrap.clientWidth,H=220;
+  nlCvs.style.width=W+'px';nlCvs.style.height=H+'px';
+  nlCvs.width=W*PR;nlCvs.height=H*PR;
+  nlCtx.resetTransform();nlCtx.scale(PR,PR);
 
-  // Always dark — space background
-  ctx.fillStyle='#111922';
-  ctx.fillRect(0,0,W,H);
+  // Icy gradient background
+  const bg=nlCtx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#0a1428');bg.addColorStop(.4,'#0e1e38');
+  bg.addColorStop(.7,'#122040');bg.addColorStop(1,'#162848');
+  nlCtx.fillStyle=bg;nlCtx.fillRect(0,0,W,H);
 
-  // Faint star field
-  ctx.fillStyle='rgba(255,255,255,.45)';
-  [[.05,.15],[.13,.6],[.22,.1],[.33,.42],[.45,.22],[.56,.72],[.68,.14],[.79,.56],[.88,.32],[.95,.78]].forEach(([fx,fy])=>{
-    ctx.beginPath();ctx.arc(fx*W,fy*H,1.2,0,Math.PI*2);ctx.fill();
-  });
+  // Faint grid
+  nlCtx.strokeStyle='rgba(100,150,200,.07)';nlCtx.lineWidth=0.5;
+  for(let y=20;y<H;y+=20){nlCtx.beginPath();nlCtx.moveTo(0,y);nlCtx.lineTo(W,y);nlCtx.stroke();}
 
-  const AXIS_Y=H*0.55;
-  const WIN=2.2;
-  const expLo=zoomExp-WIN,expHi=zoomExp+WIN;
-  function eX(e){return(e-expLo)/(expHi-expLo)*W;}
+  const AY=H*0.52;const WIN=2.2;
+  const eLo=zoomExp-WIN,eHi=zoomExp+WIN;
+  function eX(e){return(e-eLo)/(eHi-eLo)*W;}
 
-  // Axis line — always visible white
-  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.moveTo(0,AXIS_Y);ctx.lineTo(W,AXIS_Y);ctx.stroke();
+  // Axis
+  nlCtx.strokeStyle='rgba(150,200,255,.2)';nlCtx.lineWidth=1;
+  nlCtx.beginPath();nlCtx.moveTo(0,AY);nlCtx.lineTo(W,AY);nlCtx.stroke();
 
   // Integer ticks
-  for(let e=Math.ceil(expLo);e<=Math.floor(expHi);e++){
+  for(let e=Math.ceil(eLo);e<=Math.floor(eHi);e++){
     const x=eX(e);if(x<0||x>W)continue;
-    ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(x,AXIS_Y-6);ctx.lineTo(x,AXIS_Y+6);ctx.stroke();
-    ctx.font='bold 10px DM Mono,monospace';
-    ctx.fillStyle='rgba(255,255,255,.55)';
-    ctx.textAlign='center';ctx.textBaseline='top';
-    ctx.fillText('10'+sup(e),x,AXIS_Y+9);
+    nlCtx.strokeStyle='rgba(150,200,255,.25)';nlCtx.lineWidth=0.8;
+    nlCtx.beginPath();nlCtx.moveTo(x,AY-5);nlCtx.lineTo(x,AY+5);nlCtx.stroke();
+    nlCtx.font='bold 10px DM Mono,monospace';
+    nlCtx.fillStyle='rgba(150,200,255,.5)';
+    nlCtx.textAlign='center';nlCtx.textBaseline='top';
+    nlCtx.fillText('10'+sup(e),x,AY+8);
   }
 
-  // Sub-ticks
-  for(let e=Math.floor(expLo);e<=Math.ceil(expHi);e++){
-    for(let s=2;s<10;s++){
-      const se=e+Math.log10(s);if(se<expLo||se>expHi)continue;
-      const x=eX(se);
-      ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=0.5;
-      ctx.beginPath();ctx.moveTo(x,AXIS_Y-2);ctx.lineTo(x,AXIS_Y+2);ctx.stroke();
-    }
-  }
+  // Zoom cursor
+  const cx=eX(zoomExp);
+  nlCtx.strokeStyle='rgba(196,122,10,.6)';nlCtx.lineWidth=1;nlCtx.setLineDash([3,3]);
+  nlCtx.beginPath();nlCtx.moveTo(cx,4);nlCtx.lineTo(cx,AY-8);nlCtx.stroke();nlCtx.setLineDash([]);
+  nlCtx.beginPath();nlCtx.arc(cx,AY,5,0,Math.PI*2);
+  nlCtx.fillStyle='rgba(196,122,10,.9)';nlCtx.fill();
 
-  // Zoom cursor (gold dashed line)
-  const curX=eX(zoomExp);
-  ctx.strokeStyle='rgba(192,128,48,.7)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
-  ctx.beginPath();ctx.moveTo(curX,6);ctx.lineTo(curX,AXIS_Y-6);ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.beginPath();ctx.arc(curX,AXIS_Y,5,0,Math.PI*2);
-  ctx.fillStyle='rgba(192,128,48,.9)';ctx.fill();
-
-  // Object colours (solid, readable on dark bg)
-  const OBJ_COLORS=[
-    '#4ec9a0','#6ab8e0','#a08ae0','#e09060','#60c060',
-    '#e06060','#60a0e0','#e0c040','#e0a060','#80e0c0','#c080e0','#e08060'
-  ];
-
+  // Objects
   nlHits=[];
   OBJECTS.forEach((obj,oi)=>{
-    const x=eX(obj.exp);if(x<-80||x>W+80)return;
+    const x=eX(obj.exp);if(x<-60||x>W+60)return;
     const dist=Math.abs(obj.exp-zoomExp);
-    // Fade when far from centre of view
-    const vis=Math.max(0,1-Math.max(0,dist-WIN*0.6)/(WIN*0.45));
-    if(vis<=0.02)return;
+    const vis=Math.max(0,1-Math.max(0,dist-WIN*0.55)/(WIN*0.5));
+    if(vis<0.03)return;
     const prox=Math.max(0,1-dist/WIN);
-    const r=8+prox*24;
-    const isA=obj===clickedObj,isB=obj===prevClicked,isSel=isA||isB,isHov=obj===hoveredObj;
-    const baseCol=OBJ_COLORS[oi%OBJ_COLORS.length];
+    const r=8+prox*22;
+    const isA=obj===clickA,isB=obj===clickB;
+    const col=OBJ_COLS[oi%OBJ_COLS.length];
 
-    // Glow ring
-    if(isSel||isHov){
-      ctx.beginPath();ctx.arc(x,AXIS_Y,r+8,0,Math.PI*2);
-      ctx.fillStyle=`rgba(192,128,48,${vis*0.28})`;ctx.fill();
+    if(isA||isB){
+      nlCtx.beginPath();nlCtx.arc(x,AY,r+10,0,Math.PI*2);
+      nlCtx.fillStyle=`rgba(20,104,192,${vis*0.2})`;nlCtx.fill();
     }
+    nlCtx.beginPath();nlCtx.arc(x,AY,r,0,Math.PI*2);
+    nlCtx.fillStyle=isA?`rgba(30,140,220,${vis*.9})`:isB?`rgba(220,80,50,${vis*.9})`:(col+(Math.round(vis*200).toString(16).padStart(2,'0')));
+    nlCtx.fill();
+    if(isA||isB){nlCtx.strokeStyle='rgba(255,255,255,.8)';nlCtx.lineWidth=2;nlCtx.stroke();}
 
-    // Solid circle — always high contrast
-    ctx.beginPath();ctx.arc(x,AXIS_Y,r,0,Math.PI*2);
-    if(isA) ctx.fillStyle=`rgba(29,160,140,${vis*0.92})`;
-    else if(isB) ctx.fillStyle=`rgba(200,90,50,${vis*0.92})`;
-    else ctx.fillStyle=baseCol+(Math.round(vis*220).toString(16).padStart(2,'0'));
-    ctx.fill();
-    ctx.strokeStyle=isSel?'#fff':`rgba(255,255,255,${vis*0.3})`;
-    ctx.lineWidth=isSel?2:1;ctx.stroke();
-
-    // Emoji
     if(r>=10){
-      ctx.font=Math.min(r*1.1,24)+'px serif';
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.globalAlpha=vis;ctx.fillText(obj.emoji,x,AXIS_Y);ctx.globalAlpha=1;
+      nlCtx.font=Math.min(r*.95,20)+'px serif';nlCtx.textAlign='center';nlCtx.textBaseline='middle';
+      nlCtx.globalAlpha=vis;nlCtx.fillText(obj.emoji,x,AY);nlCtx.globalAlpha=1;
     }
-
-    // Name above circle — always white text on dark bg
-    ctx.globalAlpha=vis;
-    ctx.font=(isSel||isHov?'bold ':'')+`10px DM Sans,sans-serif`;
-    ctx.textAlign='center';ctx.textBaseline='bottom';
-    ctx.fillStyle='rgba(255,255,255,.9)';
-    ctx.fillText(obj.name,x,Math.max(AXIS_Y-r-5,12));
-    // Sci notation
-    ctx.font='bold 8px DM Mono,monospace';
-    ctx.fillStyle='rgba(200,160,80,.95)';
-    ctx.fillText(obj.sci,x,Math.max(AXIS_Y-r-16,3));
-    ctx.globalAlpha=1;
-
-    nlHits.push({obj,cx:x,cy:AXIS_Y,r});
+    nlCtx.globalAlpha=vis;
+    nlCtx.font=`${(isA||isB)?'bold ':''}10px DM Mono,monospace`;
+    nlCtx.fillStyle='rgba(220,240,255,.9)';nlCtx.textAlign='center';nlCtx.textBaseline='bottom';
+    nlCtx.fillText(obj.name,x,Math.max(AY-r-5,12));
+    nlCtx.font='8px DM Mono,monospace';
+    nlCtx.fillStyle='rgba(196,162,80,.9)';
+    nlCtx.fillText(obj.sci,x,Math.max(AY-r-17,3));
+    nlCtx.globalAlpha=1;
+    nlHits.push({obj,cx:x,cy:AY,r});
   });
 
-  // Axis direction labels
-  ctx.font='10px DM Sans';ctx.fillStyle='rgba(255,255,255,.35)';
-  ctx.textAlign='left';ctx.textBaseline='bottom';ctx.fillText('← smaller',8,H-4);
-  ctx.textAlign='right';ctx.fillText('larger →',W-8,H-4);
+  nlCtx.font='10px DM Mono';nlCtx.fillStyle='rgba(150,200,255,.3)';
+  nlCtx.textAlign='left';nlCtx.textBaseline='bottom';nlCtx.fillText('← smaller',8,H-4);
+  nlCtx.textAlign='right';nlCtx.fillText('larger →',W-8,H-4);
 
-  document.getElementById('zoom-val').textContent='~10'+sup(Math.round(zoomExp))+' m scale';
+  document.getElementById('zoom-vl').textContent='~10'+sup(Math.round(zoomExp))+' m';
+  document.getElementById('tr-val').textContent='~10'+sup(Math.round(zoomExp))+' m';
 }
 
 function animZoom(){
-  if(Math.abs(zoomExp-targetZoom)>0.006){
-    zoomExp+=(targetZoom-zoomExp)*0.18;
+  if(Math.abs(zoomExp-targetZoom)>0.005){
+    zoomExp+=(targetZoom-zoomExp)*0.16;
     document.getElementById('zoom-sl').value=zoomExp;
-    drawNL();updateNLInfo();requestAnimationFrame(animZoom);
+    drawNL();requestAnimationFrame(animZoom);
   } else {
-    zoomExp=targetZoom;document.getElementById('zoom-sl').value=zoomExp;drawNL();updateNLInfo();animating=false;
+    zoomExp=targetZoom;document.getElementById('zoom-sl').value=zoomExp;drawNL();animating=false;
   }
 }
 function setZoom(v){targetZoom=Math.max(-7,Math.min(13,v));if(!animating){animating=true;animZoom();}}
 
-document.getElementById('zoom-sl').addEventListener('input',e=>{zoomExp=+e.target.value;targetZoom=zoomExp;drawNL();updateNLInfo();});
-document.getElementById('zoom-in').addEventListener('click',()=>setZoom(zoomExp-1));
-document.getElementById('zoom-out').addEventListener('click',()=>setZoom(zoomExp+1));
+document.getElementById('zoom-sl').addEventListener('input',e=>{zoomExp=targetZoom=+e.target.value;drawNL();});
+document.getElementById('zn-sm').addEventListener('click',()=>setZoom(zoomExp-1));
+document.getElementById('zn-lg').addEventListener('click',()=>setZoom(zoomExp+1));
 document.addEventListener('keydown',e=>{
-  if(!document.getElementById('view-scale').classList.contains('active'))return;
+  if(!document.getElementById('view-zoom').classList.contains('active'))return;
   if(e.key==='ArrowLeft')setZoom(zoomExp-1);
   if(e.key==='ArrowRight')setZoom(zoomExp+1);
 });
 
-const nlC=document.getElementById('nl-canvas');
-nlC.addEventListener('mousemove',e=>{
-  const r=nlC.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
-  let found=null;
-  for(const h of nlHits)if(Math.hypot(mx-h.cx,my-h.cy)<=h.r+14){found=h.obj;break;}
-  if(found!==hoveredObj){hoveredObj=found;drawNL();}
-  nlC.style.cursor=found?'pointer':'default';
+nlCvs.addEventListener('mousemove',e=>{
+  const r=nlCvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  let f=null;for(const h of nlHits)if(Math.hypot(mx-h.cx,my-h.cy)<=h.r+12){f=h.obj;break;}
+  if(f!==hovObj){hovObj=f;drawNL();}
+  nlCvs.style.cursor=f?'pointer':'default';
 });
-nlC.addEventListener('mouseleave',()=>{hoveredObj=null;drawNL();});
-nlC.addEventListener('click',e=>{
-  const r=nlC.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+nlCvs.addEventListener('mouseleave',()=>{hovObj=null;drawNL();});
+nlCvs.addEventListener('click',e=>{
+  const r=nlCvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
   for(const h of nlHits){
-    if(Math.hypot(mx-h.cx,my-h.cy)<=h.r+14){
-      if(clickedObj===h.obj){clickedObj=null;prevClicked=null;}
-      else{prevClicked=clickedObj;clickedObj=h.obj;}
+    if(Math.hypot(mx-h.cx,my-h.cy)<=h.r+12){
+      if(clickA===h.obj){clickA=null;clickB=null;}
+      else if(clickB===h.obj){clickB=null;}
+      else{clickB=clickA;clickA=h.obj;}
       drawNL();updateNLInfo();return;
     }
   }
 });
-
 function updateNLInfo(){
-  const obj=hoveredObj||clickedObj;
-  if(!obj){document.getElementById('nl-emoji').textContent='👆';document.getElementById('nl-name').textContent='Drag the slider or click an object';document.getElementById('nl-sci').textContent='';document.getElementById('nl-detail').textContent='Use arrow keys or buttons to zoom';document.getElementById('cmp-bar').classList.remove('show');return;}
-  document.getElementById('nl-emoji').textContent=obj.emoji;
-  document.getElementById('nl-name').textContent=obj.name;
-  document.getElementById('nl-sci').textContent=obj.sci;
-  document.getElementById('nl-detail').textContent=obj.detail;
-  if(clickedObj&&prevClicked&&clickedObj!==prevClicked){
-    const big=clickedObj.exp>=prevClicked.exp?clickedObj:prevClicked;
-    const small=clickedObj.exp>=prevClicked.exp?prevClicked:clickedObj;
+  const obj=hovObj||clickA;
+  const info=document.getElementById('nl-info');
+  const cmp=document.getElementById('nl-cmp');
+  if(!obj){
+    info.innerHTML='<div class="nli-empty">Drag the slider or click an object on the line</div>';
+    cmp.innerHTML='<div class="cmp-header">Comparison</div><div class="cmp-empty">Click two objects to compare their scales</div>';
+    return;
+  }
+  info.innerHTML=`<div class="nli-emoji">${obj.emoji}</div><div class="nli-name">${obj.name}</div><div class="nli-sci">${obj.sci}</div><div class="nli-detail">${obj.detail}</div>`;
+  if(clickA&&clickB){
+    const big=clickA.exp>=clickB.exp?clickA:clickB;
+    const small=clickA.exp>=clickB.exp?clickB:clickA;
     const diff=big.exp-small.exp;
-    document.getElementById('cmp-bar').classList.add('show');
-    document.getElementById('cmp-big').textContent=big.emoji+' '+big.name+' is 10'+sup(diff)+' times bigger than '+small.emoji+' '+small.name;
-    document.getElementById('cmp-sub').innerHTML=big.sci+' ÷ '+small.sci+' → exponent difference = <strong>'+diff+'</strong>';
-  } else document.getElementById('cmp-bar').classList.remove('show');
+    const factor=Math.pow(10,diff);
+    const fs=diff>=6?factor.toExponential(0):'10'+sup(diff);
+    cmp.innerHTML=`<div class="cmp-header">Comparison</div>
+    <div class="cmp-text">${big.emoji} <strong>${big.name}</strong> (${big.sci})<br>is</div>
+    <span class="cmp-big">${fs}×</span>
+    <div class="cmp-text">larger than<br>${small.emoji} <strong>${small.name}</strong> (${small.sci})<br><br>Exponent gap: ${big.exp} − ${small.exp} = ${diff}<br>Scale factor = 10${sup(diff)}</div>`;
+  } else {
+    cmp.innerHTML='<div class="cmp-header">Comparison</div><div class="cmp-empty">Click a second object to compare</div>';
+  }
 }
-new ResizeObserver(()=>{if(document.getElementById('view-scale').classList.contains('active'))drawNL();}).observe(nlC.parentElement);
 
-// DRAG TAB
+new ResizeObserver(()=>{if(document.getElementById('view-zoom').classList.contains('active'))drawNL();}).observe(nlCvs.parentElement);
+
+// ════════════════════════════════════════════════════
+// VIEW 2: DRAG
+// ════════════════════════════════════════════════════
 let sigDigits=[],origExp=0,shift=0,solved=false;
+
 function loadNum(s){
   const n=parseFloat(s);
-  const es=Math.abs(n).toExponential(7).replace(/\.?0+e/,'e');
-  const[cp,ep]=es.split('e');
+  const es=Math.abs(n).toExponential(8).replace(/\.?0+e/,'e');
+  const [cp,ep]=es.split('e');
   origExp=parseInt(ep);shift=0;solved=false;
   sigDigits=cp.replace('.','').replace(/0+$/,'').split('');
   if(!sigDigits.length)sigDigits=['0'];
-  document.getElementById('success-card').classList.remove('show');
+  document.getElementById('success').classList.remove('show');
   renderTiles();
 }
+
 function renderTiles(){
   const row=document.getElementById('tile-row');row.innerHTML='';
   const dbc=1+shift,lP=Math.max(0,1-dbc),rP=Math.max(0,dbc-sigDigits.length);
-  const all=[...Array(lP).fill('0'),...sigDigits,...Array(Math.min(rP,10)).fill('0')];
+  const all=[...Array(lP).fill('0'),...sigDigits,...Array(Math.min(rP,12)).fill('0')];
   const dot=lP+Math.max(1,dbc);
-  const disp=all.slice(0,Math.min(all.length,13));
+  const disp=all.slice(0,Math.min(all.length,14));
   disp.forEach((d,i)=>{
-    if(i===dot){const pin=document.createElement('div');pin.className='decimal-pin';pin.innerHTML='<div class="dp-dot"></div>';row.appendChild(pin);}
-    const t=document.createElement('div');t.className='dtile';
-    const dist=Math.abs(i-dot+0.5);
-    t.classList.add(dist<=2?'bright':dist<=4?'mid':'dim');
+    if(i===dot){const pin=document.createElement('div');pin.className='dec-pin';pin.innerHTML='<div class="dec-dot"></div>';row.appendChild(pin);}
+    const t=document.createElement('div');t.className='tile';
+    const dist=Math.abs(i-(dot-0.5));
+    t.classList.add(dist<=2?'tile-bright':dist<=4?'tile-mid':'tile-dim');
     t.textContent=d;row.appendChild(t);
   });
-  if(dot>=disp.length){const pin=document.createElement('div');pin.className='decimal-pin';pin.innerHTML='<div class="dp-dot"></div>';row.appendChild(pin);}
+  if(dot>=disp.length){const pin=document.createElement('div');pin.className='dec-pin';pin.innerHTML='<div class="dec-dot"></div>';row.appendChild(pin);}
   updateReadout();
 }
+
 function updateReadout(){
   const curExp=origExp+shift,dbc=1+shift,lP=Math.max(0,1-dbc);
   const all=[...Array(lP).fill('0'),...sigDigits];
@@ -403,45 +603,66 @@ function updateReadout(){
   const coeff=aD?bD+'.'+aD:bD;
   const fd=parseInt(bD);
   const ok=bD.length===1&&fd>=1&&fd<=9;
-  document.getElementById('sr-coeff').textContent=coeff;
-  document.getElementById('sr-coeff').className='sr-coeff'+(ok?' ok':'');
-  document.getElementById('sr-exp').textContent=sup(curExp);
-  document.getElementById('sr-exp').className='sr-exp'+(ok?' ok':'');
-  const sb=document.getElementById('drag-status');sb.innerHTML='';
-  const p1=document.createElement('div');
-  if(ok){p1.className='ds-pill ds-good';p1.textContent='OK: '+coeff+' x 10'+sup(curExp);}
-  else if(bD.length>1){p1.className='ds-pill ds-warn';p1.textContent=bD.length+' digits before decimal -- drag left';}
-  else if(bD==='0'){p1.className='ds-pill ds-warn';p1.textContent='0 before decimal -- drag right';}
-  else{p1.className='ds-pill ds-idle';p1.textContent='drag left or right';}
-  sb.appendChild(p1);
-  if(shift!==0){const p2=document.createElement('div');p2.className='ds-pill ds-idle';p2.textContent=shift>0?'moved '+shift+' left -- exp +'+shift:'moved '+Math.abs(shift)+' right -- exp '+shift;sb.appendChild(p2);}
-  if(ok&&!solved){solved=true;celebrate(coeff,curExp);}
+
+  document.getElementById('ro-coeff').textContent=coeff;
+  document.getElementById('ro-coeff').className='ro-coeff'+(ok?' ok':'');
+  document.getElementById('ro-exp').textContent=sup(curExp);
+  document.getElementById('ro-exp').className='ro-exp'+(ok?' ok':'');
+
+  const st=document.getElementById('drag-st');
+  if(ok){st.textContent='✓ correct form: '+coeff+' × 10'+sup(curExp);st.className='drag-status ok';}
+  else if(bD.length>1){st.textContent=bD.length+' digits before decimal — drag left';st.className='drag-status warn';}
+  else if(bD==='0'){st.textContent='0 before decimal — drag right';st.className='drag-status warn';}
+  else{st.textContent='← drag left or right →';st.className='drag-status';}
+
+  if(ok&&!solved){
+    solved=true;
+    const suc=document.getElementById('success');
+    suc.classList.add('show');
+    document.getElementById('suc-eq').textContent=coeff+' × 10'+sup(curExp);
+    document.getElementById('suc-exp').innerHTML=
+      'Decimal moved <strong>'+Math.abs(shift)+'</strong> place'+(Math.abs(shift)!==1?'s ':' ')+
+      (shift>0?'left → exponent = +'+shift:'right → exponent = '+shift)+
+      '. Final exponent: <strong>'+curExp+'</strong>';
+    // tiny confetti
+    const stg=document.getElementById('stage');
+    ['✦','◆','★'].forEach((ch,i)=>{
+      const el=document.createElement('div');
+      el.style.cssText=`position:absolute;font-size:18px;color:#3ae890;left:${20+i*28}%;top:20%;animation:confPop .7s ${i*0.12}s ease both;pointer-events:none`;
+      el.textContent=ch;stg.appendChild(el);
+      setTimeout(()=>el.remove(),900);
+    });
+  }
 }
-function celebrate(coeff,exp){
-  const stage=document.getElementById('dragger-stage');
-  ['🎉','✨','⭐','🌟'].forEach((em,i)=>{
-    const el=document.createElement('div');el.className='conf';el.textContent=em;
-    el.style.cssText='left:'+(15+i*22)+'%;top:'+(8+i%2*25)+'%;animation-delay:'+(i*0.1)+'s';
-    stage.appendChild(el);setTimeout(()=>el.remove(),900);
-  });
-  document.getElementById('success-card').classList.add('show');
-  document.getElementById('sc-eq').textContent=coeff+' x 10'+sup(exp);
-  document.getElementById('sc-explain').innerHTML='The decimal moved <strong>'+Math.abs(shift)+'</strong> place'+(Math.abs(shift)!==1?'s':'')+' '+(shift>0?'left (bigger)':'right (smaller)')+' -- so exponent = <strong>'+exp+'</strong>.';
-}
+
 let dA=false,dSX=0,dSS=0;
-const stg=document.getElementById('dragger-stage');
-stg.addEventListener('pointerdown',e=>{dA=true;dSX=e.clientX;dSS=shift;stg.setPointerCapture(e.pointerId);});
-stg.addEventListener('pointermove',e=>{if(!dA)return;const dx=e.clientX-dSX;const ns=Math.max(-8,Math.min(15,dSS+Math.round(dx/48)*-1));if(ns!==shift){shift=ns;if(solved)solved=false;renderTiles();}});
-stg.addEventListener('pointerup',()=>{dA=false;});
-document.querySelectorAll('.psc').forEach(btn=>{
+const stage=document.getElementById('stage');
+stage.addEventListener('pointerdown',e=>{dA=true;dSX=e.clientX;dSS=shift;stage.setPointerCapture(e.pointerId);});
+stage.addEventListener('pointermove',e=>{
+  if(!dA)return;
+  const dx=e.clientX-dSX;
+  const ns=Math.max(-8,Math.min(15,dSS+Math.round(dx/46)*-1));
+  if(ns!==shift){shift=ns;if(solved)solved=false;renderTiles();}
+});
+stage.addEventListener('pointerup',()=>{dA=false;});
+
+document.querySelectorAll('.preset').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    document.querySelectorAll('.psc').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.preset').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('cp-num').textContent=btn.dataset.label;
+    document.getElementById('ch-num').textContent=btn.dataset.lbl;
     loadNum(btn.dataset.num);
   });
 });
-drawNL();loadNum('5900');
+
+// confetti keyframe
+const ks=document.createElement('style');
+ks.textContent='@keyframes confPop{0%{transform:scale(0) translateY(0);opacity:1}100%{transform:scale(1.5) translateY(-30px);opacity:0}}';
+document.head.appendChild(ks);
+
+// ── INIT ──
+drawNL();
+loadNum('5900');
 </script>
 </body>
 </html>
